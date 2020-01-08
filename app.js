@@ -1,3 +1,12 @@
+//add config for backup
+const config = {
+  host: 'localhost',
+  port: 5432,
+  database: 'buddy_pass',
+  user: 'postgres',
+  password: ''
+};
+
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
@@ -5,14 +14,35 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 
+const Sequelize = require('sequelize');
+//const UsersModel = require('./models/users')
+
+// needed for Heroku
+const connectionString = `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`
+const sequelize = new Sequelize(process.env.DATABASE_URL || connectionString, {
+    dialect: 'postgres',
+    pool: {
+        max: 10,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
+})
+
+
+//Models
+const Users = UsersModel(sequelize, Sequelize);
+
+//Joins
+
 // include routes -- use with templating
 // const index = require('./routes/index');
 // const users = require('./routes/users');
 
+//create app
 const app = express();
 
 // view engine setup
-
 app.set('view engine', 'ejs');
 
 // import settings from .env file or ENV variables
@@ -74,9 +104,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // look for static files in the 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
-// use the route files
+// use the route files --need to create these
 //app.use('/', index);
 //app.use('/users', users);
 
@@ -99,7 +129,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.get("/", function(req, res, next) {
-    console.log('you are here!');
+    console.log('you are here!'); //make sure app is working!
 })
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
