@@ -1,11 +1,26 @@
 {
   "name": "buddypass",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmejones/Buddy-Pass.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cmejones/Buddy-Pass/issues"
+  },
+  "homepage": "https://github.com/cmejones/Buddy-Pass#readme",
+  "description": "",
+  "dependencies": {
+    "axios": "^0.19.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "pg": "^7.17.0",
+    "sequelize": "^5.21.3"
+  }
 }
