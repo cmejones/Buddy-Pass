@@ -1,56 +1,49 @@
-//add config for backup
-const config = {
-  host: "localhost",
-  port: 5432,
-  database: "buddy_pass",
-  user: "postgres",
-  password: ""
-};
+const express = require('express');
+const axios = require('axios');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-const express = require("express");
-const path = require("path");
-const logger = require("morgan");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const ejs = require("ejs");
+require('dotenv').config();
 
-const Sequelize = require("sequelize");
-//const UsersModel = require('./models/users')
-
-// needed for Heroku
-const connectionString = `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`;
-const sequelize = new Sequelize(process.env.DATABASE_URL || connectionString, {
-  dialect: "postgres",
-  pool: {
-    max: 10,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
-});
-
-//Models
-const Users = UsersModel(sequelize, Sequelize);
-
-//Joins
-
-// include routes -- use with templating
-// const index = require('./routes/index');
-// const users = require('./routes/users');
+const loginRouter = require('./routes/login');
 
 //create app
 const app = express();
 
 // view engine setup
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 
 // import settings from .env file or ENV variables
-require("dotenv").config();
+
+// look for static files in the 'public' folder
+app.use(express.static(__dirname + 'public'));
+// set up other express middleware
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use(logger('dev'));
+
+// Express and Passport Session
+const session = require('express-session');
+app.use(
+  session({
+    secret: process.env.APP_SECRET || 'abcdefg',
+    resave: true,
+    saveUninitialized: true
+  })
+);
 
 // require passport and the Strategies used
-const passport = require("passport");
-const Strategy = require("passport-strategy");
-const LinkedInStrategy = require("@sokratis/passport-linkedin-oauth2").Strategy;
+const passport = require('passport');
+const Strategy = require('passport-strategy');
+const LinkedInStrategy = require('@sokratis/passport-linkedin-oauth2').Strategy;
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(
   new LinkedInStrategy(
@@ -58,7 +51,7 @@ passport.use(
       clientID: process.env.LINKEDIN_KEY,
       clientSecret: process.env.LINKEDIN_SECRET,
       callbackURL: `${process.env.APP_URL}/auth/linkedin/callback`,
-      scope: ["r_emailaddress", "r_liteprofile"]
+      scope: ['r_emailaddress', 'r_liteprofile']
     },
     function(accessToken, refreshToken, profile, done) {
       // asynchronous verification, for effect...
@@ -72,37 +65,6 @@ passport.use(
     }
   )
 );
-
-app.get(
-  "/auth/linkedin",
-  passport.authenticate("linkedin", { state: "SOME STATE" }),
-  function(req, res) {
-    // The request will be redirected to LinkedIn for authentication, so this
-    // function will not be called.
-  }
-);
-
-// the login callback:
-
-app.get(
-  "/auth/linkedin/callback",
-  passport.authenticate("linkedin", {
-    successRedirect: "/",
-    failureRedirect: "/login"
-  })
-);
-
-// Express and Passport Session
-const session = require("express-session");
-app.use(
-  session({
-    secret: process.env.APP_SECRET || "abcdefg",
-    resave: true,
-    saveUninitialized: true
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
 
 // serialize = parse and store data in session
 passport.serializeUser(function(user, done) {
@@ -121,22 +83,39 @@ passport.deserializeUser(function(serializedUser, done) {
   done(null, user);
 });
 
-// set up other express middleware
-app.use(logger("dev"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.get(
+  '/auth/linkedin',
+  passport.authenticate('linkedin', { state: 'SOME STATE' }),
+  function(req, res) {
+    // The request will be redirected to LinkedIn for authentication, so this
+    // function will not be called.
+  }
+);
 
-// look for static files in the 'public' folder
-//app.use(express.static(path.join(__dirname, 'public')));
+// the login callback:
 
-// use the route files --need to create these
-//app.use('/', index);
-//app.use('/users', users);
+app.get(
+  '/auth/linkedin/callback',
+  passport.authenticate('linkedin', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  })
+);
+
+app.use('/login', loginRouter);
+
+app.get('/', function(req, res) {
+  res.send('Hello Leah!');
+});
+
+app.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/login');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  const err = new Error("Not Found");
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -145,19 +124,16 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render('pages/error');
 });
 
-app.get("/", function(req, res, next) {
-  console.log("you are here!"); //make sure app is working!
-});
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log("listening on port 3000");
+  console.log(`listening on port: ${port}`);
 });
 
 module.exports = app;
