@@ -1,22 +1,21 @@
 const express = require('express');
-const router = express.Router();
+const axios = require('axios');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const ejs = require('ejs');
 
 require('dotenv').config();
 
-// include routes -- use with templating
-// const index = require('./routes/index');
-// const users = require('./routes/users');
+const loginRouter = require('./routes/login');
 
 const app = express();
 
 // view engine setup
 app.set('view engine', 'ejs');
+
+
 
 // import settings from .env file or ENV variables
 
@@ -29,22 +28,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(logger('dev'));
 
-// use the route files
-//app.use('/', index);
-//app.use('/users', users);
-
-app.get('/', function(req, res) {
-    res.send("Hello World!");
-});
-
-app.get('/login', function(req, res) {
-    res.render('pages/login');
-});
-
-app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect('/login');
-});
+// Express and Passport Session
+const session = require('express-session');
+app.use(session({
+    secret: process.env.APP_SECRET || 'abcdefg',
+    resave: true,
+    saveUninitialized: true,
+}));
 
 
 // require passport and the Strategies used
@@ -54,7 +44,6 @@ const LinkedInStrategy = require('@sokratis/passport-linkedin-oauth2').Strategy;
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 passport.use(new LinkedInStrategy({
     clientID: process.env.LINKEDIN_KEY,
@@ -72,6 +61,24 @@ passport.use(new LinkedInStrategy({
     });
 }));
 
+// serialize = parse and store data in session
+passport.serializeUser(function(user, done) {
+    // this function should strip down the user object to something that can be stored in the session
+    // for now, we will just use the whole user object but it should probably be just the id
+    // null is for errors
+    done(null, user);
+});
+
+// deserialize = fetch serialized data from session and find the full user object
+passport.deserializeUser(function(serializedUser, done) {
+    // this function takes the serialized data and should expand it into a full user object
+    // for example, maybe you are going to get the user from the database by id?
+    // null is for errors
+    const user = serializedUser;
+    done(null, user);
+});
+
+
 app.get('/auth/linkedin',
     passport.authenticate('linkedin', { state: 'SOME STATE'  }),
     function(req, res){
@@ -85,6 +92,20 @@ app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
         successRedirect: '/',
         failureRedirect: '/login'
     }));
+
+
+app.use('/login', loginRouter);
+
+app.get('/', function(req, res) {
+    res.send("Hello Leah!");
+});
+
+
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/login');
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -102,35 +123,6 @@ app.use(function(err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
     res.render('pages/error');
-});
-
-
-
-// Express and Passport Session
-const session = require('express-session');
-app.use(session({
-    secret: process.env.APP_SECRET || 'abcdefg',
-    resave: true,
-    saveUninitialized: true,
-}));
-
-
-
-// serialize = parse and store data in session
-passport.serializeUser(function(user, done) {
-  // this function should strip down the user object to something that can be stored in the session
-  // for now, we will just use the whole user object but it should probably be just the id
-  // null is for errors
-    done(null, user);
-});
-
-// deserialize = fetch serialized data from session and find the full user object
-passport.deserializeUser(function(serializedUser, done) {
-  // this function takes the serialized data and should expand it into a full user object
-  // for example, maybe you are going to get the user from the database by id?
-  // null is for errors
-    const user = serializedUser;
-    done(null, user);
 });
 
 
