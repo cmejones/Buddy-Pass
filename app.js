@@ -1,3 +1,11 @@
+const config = {
+    host: 'localhost',
+    port: 5432,
+    database: 'buddy_pass',
+    user: 'postgres',
+    password: '',
+};
+
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
@@ -5,6 +13,23 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
+const pgp = require('pg-promise')();
+const db = pgp(process.env.DATABASE_URL || config);
+
+const Sequelize = require('sequelize')
+
+const connectionString = `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`
+const sequelize = new Sequelize(process.env.DATABASE_URL || connectionString, {
+    dialect: 'postgres',
+    pool: {
+        max: 10,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
+})
+
 
 require('dotenv').config();
 
