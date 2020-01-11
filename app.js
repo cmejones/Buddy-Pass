@@ -1,4 +1,3 @@
-
 const config = {
   host: 'localhost',
   port: 5432,
@@ -15,15 +14,15 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const db = require('./models/')
+const app = express();
+
+const db = require('./models/');
 //module.exports = { User } //needed here?
 
 require('dotenv').config();
 
 const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
-
-
 
 // view engine setup
 app.set('view engine', 'ejs');
@@ -79,39 +78,43 @@ passport.use(
       clientID: process.env.LINKEDIN_KEY,
       clientSecret: process.env.LINKEDIN_SECRET,
       callbackURL: `${process.env.APP_URL}/auth/linkedin/callback`,
-      scope: ['r_emailaddress', 'r_liteprofile'],
+      scope: ['r_emailaddress', 'r_liteprofile']
     },
     function(accessToken, refreshToken, profile, done) {
       console.log('logged in');
-        //check user table for anyone with a profile.id in the 'linkedin' column
-        return db.users.findOne({where:{
-          provider: 'LinkedIn',
-          'profile.id': profile.id 
-        }})
+      //check user table for anyone with a profile.id in the 'linkedin' column
+      return db.users
+        .findOne({
+          where: {
+            provider: 'LinkedIn',
+            'profile.id': profile.id
+          }
+        })
         .then(function(user) {
-            //No user was found... so create a new user with values from LinkedIn            
-            if (!user) {
-              const newUser = new db.users({
-                lastName: profile.name.familyName,
-                email: profile.emails[0].value,
-                firstName: profile.name.givenName,
-                //now in the future searching on db.users.findOne({provider: 'LinkedIn', 'profile.id': profile.id } will match because of these next 2 lines
-                provider: 'LinkedIn',
-                profile: profile._profileJson
-              });
-              return newUser.save();
-            } else {
-              return user
-            }
-          })
-          .then(user => {
-            done(null, user)
-          })
-          .catch(err => {
-            done(err);
-          });
-      })
-    );
+          //No user was found... so create a new user with values from LinkedIn
+          if (!user) {
+            const newUser = new db.users({
+              lastName: profile.name.familyName,
+              email: profile.emails[0].value,
+              firstName: profile.name.givenName,
+              //now in the future searching on db.users.findOne({provider: 'LinkedIn', 'profile.id': profile.id } will match because of these next 2 lines
+              provider: 'LinkedIn',
+              profile: profile._profileJson
+            });
+            return newUser.save();
+          } else {
+            return user;
+          }
+        })
+        .then(user => {
+          done(null, user);
+        })
+        .catch(err => {
+          done(err);
+        });
+    }
+  )
+);
 
 // serialize = parse and store data in session
 passport.serializeUser(function(user, done) {
@@ -146,14 +149,16 @@ app.get(
 //   failureRedirect: '/login'
 // }));
 
-app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}));
+app.get(
+  '/auth/linkedin/callback',
+  passport.authenticate('linkedin', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  })
+);
 
 app.use('/login', loginRouter);
 app.use('/', indexRouter);
-
 
 app.get('/logout', function(req, res) {
   req.logout();
