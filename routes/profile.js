@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   console.log('posting on login!');
 
-  res.render('pages/login', { user: req.user });
+  res.render('pages/profile', { user: req.user });
 });
 
 module.exports = router;
