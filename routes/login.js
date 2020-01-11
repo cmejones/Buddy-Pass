@@ -8,4 +8,10 @@ router.get('/', function(req, res, next) {
     res.render('pages/login', { user: req.user });
 });
 
+router.post('/', function(req, res, next) {
+    console.log('posting on login!')
+
+    res.render('pages/login', { user: req.user });
+});
+
 module.exports = router;

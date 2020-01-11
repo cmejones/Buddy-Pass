@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     bio: DataTypes.BLOB,
     strengths: DataTypes.INTEGER,
     weaknesses: DataTypes.INTEGER,
-    goals: DataTypes.INTEGER
+    goals: DataTypes.INTEGER,
+    provider: DataTypes.STRING,
+    profile: DataTypes.JSON
   }, {});
   users.associate = function(models) {
     // associations can be defined here
