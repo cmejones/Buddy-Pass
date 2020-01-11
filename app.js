@@ -23,6 +23,7 @@ require('dotenv').config();
 
 const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
+const profileRouter = require('./routes/profile');
 
 // view engine setup
 app.set('view engine', 'ejs');
@@ -152,17 +153,22 @@ app.get(
 app.get(
   '/auth/linkedin/callback',
   passport.authenticate('linkedin', {
-    successRedirect: '/',
+    successRedirect: '/profile',
     failureRedirect: '/login'
   })
 );
 
 app.use('/login', loginRouter);
 app.use('/', indexRouter);
+app.use('/profile', profileRouter);
 
 app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/login');
+});
+
+app.get('/profile', function(req, res) {
+  res.redirect('/profile');
 });
 
 // catch 404 and forward to error handler
