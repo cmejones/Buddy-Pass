@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.post('/', function(req, res, next) {
-  res.render('pages/login', { user: req.user });
+router.get('/', function(req, res, next) {
+    res.render('pages/index');
 });
 
 module.exports = router;
-

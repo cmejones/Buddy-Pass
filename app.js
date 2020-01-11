@@ -1,3 +1,12 @@
+
+const config = {
+  host: 'localhost',
+  port: 5432,
+  database: 'buddy_pass',
+  user: 'postgres',
+  password: ''
+};
+
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
@@ -6,12 +15,15 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+//create app
+const app = express();
+
 require('dotenv').config();
 
 const loginRouter = require('./routes/login');
+const indexRouter = require('./routes/index');
 
-//create app
-const app = express();
+
 
 // view engine setup
 app.set('view engine', 'ejs');
@@ -19,11 +31,11 @@ app.set('view engine', 'ejs');
 // import settings from .env file or ENV variables
 
 // look for static files in the 'public' folder
-app.use(express.static(__dirname + 'public'));
+app.use(express.static(path.join(__dirname, 'public')));
 // set up other express middleware
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(logger('dev'));
 
@@ -50,7 +62,7 @@ passport.use(
     {
       clientID: process.env.LINKEDIN_KEY,
       clientSecret: process.env.LINKEDIN_SECRET,
-      callbackURL: `${process.env.APP_URL}/auth/linkedin/callback`,
+      callbackURL: `${process.env.APP_URL}/auth/linkedin/callback` || `${process.env.APP_URL}/auth/linkedin/callback`,
       scope: ['r_emailaddress', 'r_liteprofile']
     },
     function(accessToken, refreshToken, profile, done) {
@@ -103,10 +115,8 @@ app.get(
 );
 
 app.use('/login', loginRouter);
+app.use('/', indexRouter);
 
-app.get('/', function(req, res) {
-  res.send('Hello Leah!');
-});
 
 app.get('/logout', function(req, res) {
   req.logout();
