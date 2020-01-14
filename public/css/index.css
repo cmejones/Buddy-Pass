@@ -1,0 +1,12 @@
+body {
+    margin: 0 auto;
+    text-align: center;
+    background-color: #E4E9FD;
+    background-image: -webkit-linear-gradient(120deg, #FE4641 50%, #FFFFFF 50%);
+    min-height: 800px;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}

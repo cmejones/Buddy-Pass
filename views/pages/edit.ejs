@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') -%>
+</head>
+<body>
+
+    <form class="container-fluid" action="/profile/edit" method="POST">
+        <div class="form-group">
+            <label for="bio">Bio</label>
+            <label>
+                <input class="" type="text" name="bio" id="bio" autocomplete="off" >
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="strengths">Strengths</label>
+            <textarea type="text" name="strengths" id="strengths" row="5" cols="50" autocomplete="off" ></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" name="post" >save</button>
+    </form>
+
+<footer>
+    <%- include('../partials/footer') -%>
+</footer>
+
+</body>
+</html>

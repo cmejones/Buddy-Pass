@@ -24,10 +24,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       bio: {
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
       },
       strengths: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       weaknesses: {
         type: Sequelize.INTEGER

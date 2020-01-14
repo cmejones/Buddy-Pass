@@ -25,6 +25,7 @@ const loginRouter = require('./routes/login');
 const indexRouter = require('./routes/index');
 const profileRouter = require('./routes/profile');
 
+
 // view engine setup
 app.set('view engine', 'ejs');
 
@@ -35,9 +36,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // set up other express middleware
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(logger('dev'));
+
 
 // Express and Passport Session
 const session = require('express-session');
@@ -56,22 +58,6 @@ const LinkedInStrategy = require('@sokratis/passport-linkedin-oauth2').Strategy;
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-// passport.use(new LinkedInStrategy({
-//   clientID: process.env.LINKEDIN_KEY,
-//   clientSecret: process.env.LINKEDIN_SECRET,
-//   callbackURL: `${process.env.APP_URL}/auth/linkedin/callback`,
-//   scope: ['r_emailaddress', 'r_liteprofile'],
-// }, function(accessToken, refreshToken, profile, done) {
-//   // asynchronous verification, for effect...
-//   process.nextTick(function () {
-//     // To keep the example simple, the user's LinkedIn profile is returned to
-//     // represent the logged-in user. In a typical application, you would want
-//     // to associate the LinkedIn account with a user record in your database,
-//     // and return that user instead.
-//     return done(null, profile);
-//   });
-// }));
 
 passport.use(
   new LinkedInStrategy(
@@ -92,6 +78,7 @@ passport.use(
           }
         })
         .then(function(user) {
+            console.log(profile);
           //No user was found... so create a new user with values from LinkedIn
           if (!user) {
             const newUser = new db.users({
@@ -102,7 +89,8 @@ passport.use(
               provider: 'LinkedIn',
               profile: profile._profileJson
             });
-            return newUser.save();
+              console.log(profile);
+              return newUser.save();
           } else {
             return user;
           }
@@ -145,11 +133,6 @@ app.get(
 
 // the login callback:
 
-// app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
-//   successRedirect: '/',
-//   failureRedirect: '/login'
-// }));
-
 app.get(
   '/auth/linkedin/callback',
   passport.authenticate('linkedin', {
@@ -162,14 +145,13 @@ app.use('/login', loginRouter);
 app.use('/', indexRouter);
 app.use('/profile', profileRouter);
 
+
+
 app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/login');
 });
 
-app.get('/profile', function(req, res) {
-  res.redirect('/profile');
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
