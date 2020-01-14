@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <%- include('../partials/head') -%>
+</head>
+
+<body>
+    
+    <% if (user) { %>
+<!--  add input forms here -->
+        <form class="">
+            
+            <h1 class="h3 mb-3 font-weight-normal">Add Functional Areas</h1>
+
+            <div id="errorMessage">
+
+            </div>
+
+            <label for="functionalArea" class="sr-only">Functional Areas</label>
+            <input type="text" id="functionalArea" class="form-control" placeholder="Enter Functional Area" required autofocus>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="submitFunctionalArea(event)">Submit</button>
+    
+        </form>
+
+    <% } %>
+</body>
+
+<!--add links to app.js and axios.js  -->
+    <script type="text/javascript" src="/app.js"></script>
+    <script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript">
+    function submitFunctionalArea(event) {
+        console.log('bang');
+        event.preventDefault();
+        let function_input = axios.get('#functionalArea').val();
+
+        let data = {
+            function : function_input
+        };
+        console.log(data, 'functional Area');
+
+        let successCallback = function(response) {
+            window.location = '/adminInput';
+        }
+        let failureCallback = function(response) {
+            $('#errorMessage').html(response.responseText);
+        }
+        apiFunctionalArea(data, successCallback, failureCallback);
+    }
+
+    </script>
+</html>
