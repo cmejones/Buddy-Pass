@@ -19,6 +19,7 @@ const app = express();
 const db = require('./models/');
 //module.exports = { User } //needed here?
 
+
 require('dotenv').config();
 
 const loginRouter = require('./routes/login');

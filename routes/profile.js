@@ -16,8 +16,6 @@ const Op = Sequelize.Op;
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  console.log('posting on login!');
-
   res.render('pages/profile', { user: req.user });
 });
 
@@ -26,7 +24,7 @@ router.get('/edit', function (req, res, next) {
 });
 
 
-router.post('/edit', function (req, res, next) {
+router.patch('/edit', function (req, res, next) {
 
     let data = {
       bio: req.body.bio,
@@ -45,18 +43,13 @@ router.post('/edit', function (req, res, next) {
     })
   } else {
 
-    return db.users.update(data, { where: {email: 'harrichl@gmail.com'}})
-        .then(() => {
-          res.redirect('/profile');
-        })
-        .then(user => {
-          done(null, user);
+    return db.users.update(data, { where: {user: req.user}})
+        .then((user) => {
+            res.json(user)
         })
         .catch(err => {
-          done(err);
-        });
-
-
+            done(err);
+             });
   }
 });
 
