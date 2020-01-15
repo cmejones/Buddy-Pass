@@ -48,40 +48,15 @@
         createFunctionalArea(data)
             .then(res => {
                 // response was a success
+                document.getElementById('functionalArea').value = '';
                 console.log('wooo!', res);
             })
             .catch(err => {
                 // response failed
             });
-        // let successCallback = function(response) {
-           
-        //     //let item = createFunctionalArea(data);
-        //     window.location = '/adminInput';
-        //     //clear the textbox
-        //     document.getElementById('functionalArea').value = '';
-        // }
-        // let errorCallback = function(response) {
-        //     // axios('#errorMessage').html(response.responseText);
-        //     console.log(response, 'you suck');
-        //     document.getElementById('functionalArea').value = 'You Suck';
-        // }
-        // apiFunctionalArea(data, successCallback, errorCallback);
+
     }
 
-//necessary?????
-//     function apiGetFunctionalArea(successCallback, errorCallback) {
-//         axios.get(app_url + 'api/functionalArea', {})
-//             .then(successCallback)
-//             .catch(errorCallback)
-// }
-//     function apiFunctionalArea(data, successCallback, errorCallback) {
-//     console.log('data in axios.js', data);
-
-//         axios.post('http://localhost:3000/' + 'api/functionalArea', {
-//             data })
-//             .then(successCallback)
-//             .catch(errorCallback);
-// }
 
 
 
