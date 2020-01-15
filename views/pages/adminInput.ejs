@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <%- include('../partials/head') -%>
 </head>
 
@@ -10,7 +9,7 @@
     
     <% if (user) { %>
 <!--  add input forms here -->
-        <form class="">
+        <form>
             
             <h1 class="h3 mb-3 font-weight-normal">Add Functional Areas</h1>
 
@@ -26,30 +25,65 @@
         </form>
 
     <% } %>
+
+    
 </body>
 
 <!--add links to app.js and axios.js  -->
-    <script type="text/javascript" src="/app.js"></script>
-    <script type="text/javascript" src="js/axios.js"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+
 <script type="text/javascript">
     function submitFunctionalArea(event) {
         console.log('bang');
         event.preventDefault();
-        let function_input = axios.get('#functionalArea').val();
+        let function_input = document.getElementById('functionalArea').value;
 
         let data = {
             function : function_input
         };
         console.log(data, 'functional Area');
-
-        let successCallback = function(response) {
-            window.location = '/adminInput';
-        }
-        let failureCallback = function(response) {
-            $('#errorMessage').html(response.responseText);
-        }
-        apiFunctionalArea(data, successCallback, failureCallback);
+        
+        createFunctionalArea(data)
+            .then(res => {
+                // response was a success
+                console.log('wooo!', res);
+            })
+            .catch(err => {
+                // response failed
+            });
+        // let successCallback = function(response) {
+           
+        //     //let item = createFunctionalArea(data);
+        //     window.location = '/adminInput';
+        //     //clear the textbox
+        //     document.getElementById('functionalArea').value = '';
+        // }
+        // let errorCallback = function(response) {
+        //     // axios('#errorMessage').html(response.responseText);
+        //     console.log(response, 'you suck');
+        //     document.getElementById('functionalArea').value = 'You Suck';
+        // }
+        // apiFunctionalArea(data, successCallback, errorCallback);
     }
+
+//necessary?????
+//     function apiGetFunctionalArea(successCallback, errorCallback) {
+//         axios.get(app_url + 'api/functionalArea', {})
+//             .then(successCallback)
+//             .catch(errorCallback)
+// }
+//     function apiFunctionalArea(data, successCallback, errorCallback) {
+//     console.log('data in axios.js', data);
+
+//         axios.post('http://localhost:3000/' + 'api/functionalArea', {
+//             data })
+//             .then(successCallback)
+//             .catch(errorCallback);
+// }
+
+
 
     </script>
 </html>

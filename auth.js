@@ -34,7 +34,6 @@ const setupAuth = (app) => {
                 }
                 })
                 .then(function(user) {
-                                    console.log('here');
                 //No user was found... so create a new user with values from LinkedIn
                 if (!user) {
                     const newUser = new db.users({
