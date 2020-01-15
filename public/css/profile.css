@@ -1,0 +1,18 @@
+body {
+    margin: 0 auto;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 70%;
+}
+
+.card {
+    width: 100%;
+    background-color: #FFFFFF;
+    padding: 1rem;
+
+}
+
+.profile-header{
+    color: #FFFFFF;
+    background-color: #283149;
+}
