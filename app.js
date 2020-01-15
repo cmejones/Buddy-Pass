@@ -21,16 +21,16 @@ const FunctionModel = require('./models/functionalareas');
 const SkillsModel = require('./models/skills');
 const UsersModel = require('./models/users');
 
-const connectionString = `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`
+const connectionString = `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`;
 const sequelize = new Sequelize(process.env.DATABASE_URL || connectionString, {
-    dialect: 'postgres',
-    pool: {
-        max: 10,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
-    }
-})
+  dialect: 'postgres',
+  pool: {
+    max: 10,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
+});
 
 //models
 const Users = UsersModel(sequelize, Sequelize);
@@ -38,8 +38,8 @@ const FunctionalAreas = FunctionModel(sequelize, Sequelize);
 const Skills = SkillsModel(sequelize, Sequelize);
 
 //Joins
-Users.hasMany(Skills, {foreignKey: 'user_id'})
-Skills.belongsTo(FunctionalAreas, {foreignKey: 'skills_id'})
+Users.hasMany(Skills, { foreignKey: 'user_id' });
+Skills.belongsTo(FunctionalAreas, { foreignKey: 'skills_id' });
 
 //Routes
 const apiRouter = require('./routes/api');
@@ -48,18 +48,15 @@ const profileRouter = require('./routes/profile');
 const adminRouter = require('./routes/adminInput');
 const indexRouter = require('./routes/index');
 
-
 const app = express();
 require('dotenv').config();
 
 const db = require('./models');
 
-
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 //app.engine('ejs', ejs({ extname: 'ejs' }));
 app.set('view engine', 'ejs');
-
 
 setupAuth(app);
 
@@ -72,7 +69,7 @@ app.use(logger('dev'));
 
 app.use(express.static(path.join(__dirname, 'public'))); // look for static files in the 'public' folder
 
-app.use('/api', apiRouter)
+app.use('/api', apiRouter);
 app.use('/login', loginRouter);
 app.use('/profile', profileRouter);
 app.use('/adminInput', adminRouter);
@@ -82,13 +79,13 @@ app.use('/', indexRouter);
 app.get('/api/functionalArea', function(req, res) {
   console.log('no error here!!!');
   res.end();
-})
+});
 
-app.post('api/functionalArea', function(req,res) {
+app.post('api/functionalArea', function(req, res) {
   //let data = req.body.name;
- // console.log(req.body);
-//console.log(data);
-res.end(console.log(req.body));
+  // console.log(req.body);
+  //console.log(data);
+  res.end(console.log(req.body));
 
   // FunctionalAreas.create(data).then(function(data) {
   //   res.setHeader('Content-Type', 'application/json');
@@ -105,7 +102,6 @@ res.end(console.log(req.body));
 // //       res.end(JSON.stringify(results));
 // //     });
 // // });
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

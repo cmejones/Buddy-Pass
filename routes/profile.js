@@ -19,41 +19,35 @@ router.get('/', function(req, res, next) {
   res.render('pages/profile', { user: req.user });
 });
 
-router.get('/edit', function (req, res, next) {
+router.get('/edit', function(req, res, next) {
   res.render('pages/edit');
 });
 
-
-router.patch('/edit', function (req, res, next) {
-
-    let data = {
-      bio: req.body.bio,
-      strengths: req.body.strengths
-    };
+router.patch('/edit', function(req, res, next) {
+  
+  let data = {
+    bio: req.body.bio
+  };
 
   console.log(data);
 
-  if(!req.body.bio) {
-    return res.render('error', {
-      message: 'No Content Provided',
-      error: {
-        status: 'You must provide some content to submit a new post',
-        stack: null,
-      }
+  // if (!req.body.bio) {
+  //   return res.render('error', {
+  //     message: 'No Content Provided',
+  //     error: {
+  //       status: 'You must provide some content to submit a new post',
+  //       stack: null
+  //     }
+  //   });
+  // } else {
+  return db.Users.update(data, { where: { user: req.user } })
+    .then(user => {
+      console.log(user);
+      res.json(user);
     })
-  } else {
-
-    return db.users.update(data, { where: {user: req.user}})
-        .then((user) => {
-            res.json(user)
-        })
-        .catch(err => {
-            done(err);
-             });
-  }
+    .catch(err => {
+      done(err);
+    });
 });
-
-
-
 
 module.exports = router;
