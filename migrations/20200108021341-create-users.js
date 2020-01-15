@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       bio: {
-        type: Sequelize.BLOB
+        type: Sequelize.TEXT
       },
       strengths: {
         type: Sequelize.INTEGER

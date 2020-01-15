@@ -7,31 +7,61 @@ const config = {
 };
 
 const express = require('express');
-const axios = require('axios');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const ejs = require('ejs');
+
+const setupAuth = require('./auth');
+
+const Sequelize = require('sequelize');
+const FunctionModel = require('./models/functionalareas');
+const SkillsModel = require('./models/skills');
+const UsersModel = require('./models/users');
+
+const connectionString = `postgres://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`
+const sequelize = new Sequelize(process.env.DATABASE_URL || connectionString, {
+    dialect: 'postgres',
+    pool: {
+        max: 10,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
+})
+
+//models
+const Users = UsersModel(sequelize, Sequelize);
+const FunctionalAreas = FunctionModel(sequelize, Sequelize);
+const Skills = SkillsModel(sequelize, Sequelize);
+
+//Joins
+Users.hasMany(Skills, {foreignKey: 'user_id'})
+Skills.belongsTo(FunctionalAreas, {foreignKey: 'skills_id'})
+
+//Routes
+const apiRouter = require('./routes/api');
+const loginRouter = require('./routes/login');
+const profileRouter = require('./routes/profile');
+const adminRouter = require('./routes/adminInput');
+const indexRouter = require('./routes/index');
+
 
 const app = express();
-
-const db = require('./models/');
-//module.exports = { User } //needed here?
-
 require('dotenv').config();
 
-const loginRouter = require('./routes/login');
-const indexRouter = require('./routes/index');
-const profileRouter = require('./routes/profile');
+const db = require('./models');
 
 // view engine setup
+//app.set('views', path.join(__dirname, 'views'));
+//app.engine('ejs', ejs({ extname: 'ejs' }));
 app.set('view engine', 'ejs');
 
-// import settings from .env file or ENV variables
 
-// look for static files in the 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
+setupAuth(app);
+
 // set up other express middleware
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -39,137 +69,42 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(logger('dev'));
 
-// Express and Passport Session
-const session = require('express-session');
-app.use(
-  session({
-    secret: process.env.APP_SECRET || 'abcdefg',
-    resave: true,
-    saveUninitialized: true
-  })
-);
+app.use(express.static(path.join(__dirname, 'public'))); // look for static files in the 'public' folder
 
-// require passport and the Strategies used
-const passport = require('passport');
-const Strategy = require('passport-strategy');
-const LinkedInStrategy = require('@sokratis/passport-linkedin-oauth2').Strategy;
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-// passport.use(new LinkedInStrategy({
-//   clientID: process.env.LINKEDIN_KEY,
-//   clientSecret: process.env.LINKEDIN_SECRET,
-//   callbackURL: `${process.env.APP_URL}/auth/linkedin/callback`,
-//   scope: ['r_emailaddress', 'r_liteprofile'],
-// }, function(accessToken, refreshToken, profile, done) {
-//   // asynchronous verification, for effect...
-//   process.nextTick(function () {
-//     // To keep the example simple, the user's LinkedIn profile is returned to
-//     // represent the logged-in user. In a typical application, you would want
-//     // to associate the LinkedIn account with a user record in your database,
-//     // and return that user instead.
-//     return done(null, profile);
-//   });
-// }));
-
-passport.use(
-  new LinkedInStrategy(
-    {
-      clientID: process.env.LINKEDIN_KEY,
-      clientSecret: process.env.LINKEDIN_SECRET,
-      callbackURL: `${process.env.APP_URL}/auth/linkedin/callback`,
-      scope: ['r_emailaddress', 'r_liteprofile']
-    },
-    function(accessToken, refreshToken, profile, done) {
-      console.log('logged in');
-      //check user table for anyone with a profile.id in the 'linkedin' column
-      return db.users
-        .findOne({
-          where: {
-            provider: 'LinkedIn',
-            'profile.id': profile.id
-          }
-        })
-        .then(function(user) {
-          //No user was found... so create a new user with values from LinkedIn
-          if (!user) {
-            const newUser = new db.users({
-              lastName: profile.name.familyName,
-              email: profile.emails[0].value,
-              firstName: profile.name.givenName,
-              //now in the future searching on db.users.findOne({provider: 'LinkedIn', 'profile.id': profile.id } will match because of these next 2 lines
-              provider: 'LinkedIn',
-              profile: profile._profileJson
-            });
-            return newUser.save();
-          } else {
-            return user;
-          }
-        })
-        .then(user => {
-          done(null, user);
-        })
-        .catch(err => {
-          done(err);
-        });
-    }
-  )
-);
-
-// serialize = parse and store data in session
-passport.serializeUser(function(user, done) {
-  // this function should strip down the user object to something that can be stored in the session
-  // for now, we will just use the whole user object but it should probably be just the id
-  // null is for errors
-  done(null, user);
-});
-
-// deserialize = fetch serialized data from session and find the full user object
-passport.deserializeUser(function(serializedUser, done) {
-  // this function takes the serialized data and should expand it into a full user object
-  // for example, maybe you are going to get the user from the database by id?
-  // null is for errors
-  const user = serializedUser;
-  done(null, user);
-});
-
-app.get(
-  '/auth/linkedin',
-  passport.authenticate('linkedin', { state: 'SOME STATE' }),
-  function(req, res) {
-    // The request will be redirected to LinkedIn for authentication, so this
-    // function will not be called.
-  }
-);
-
-// the login callback:
-
-// app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
-//   successRedirect: '/',
-//   failureRedirect: '/login'
-// }));
-
-app.get(
-  '/auth/linkedin/callback',
-  passport.authenticate('linkedin', {
-    successRedirect: '/profile',
-    failureRedirect: '/login'
-  })
-);
-
+app.use('/api', apiRouter)
 app.use('/login', loginRouter);
-app.use('/', indexRouter);
 app.use('/profile', profileRouter);
+app.use('/adminInput', adminRouter);
+app.use('/', indexRouter);
 
-app.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/login');
-});
+// //api calls
+app.get('/api/functionalArea', function(req, res) {
+  console.log('no error here!!!');
+  res.end();
+})
 
-app.get('/profile', function(req, res) {
-  res.redirect('/profile');
+app.post('api/functionalArea', function(req,res) {
+  //let data = req.body.name;
+ // console.log(req.body);
+//console.log(data);
+res.end(console.log(req.body));
+
+  // FunctionalAreas.create(data).then(function(data) {
+  //   res.setHeader('Content-Type', 'application/json');
+  //   res.end(JSON.stringify(data));
+  // }).catch(function(e) {
+  //   res.status(434).send('Unable to save function')
+  // });
 });
+// // app.get('/api/functionalArea', function(req, res) {
+// //   FunctionalAreas.findAll()
+// //   console.log('api')
+// //     .then((results) => {
+// //       res.setHeader('Content-Type', 'application/json');
+// //       res.end(JSON.stringify(results));
+// //     });
+// // });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,17 +1,14 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('skills', {
+    return queryInterface.createTable('FunctionalAreas', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      funcArea: {
-        type: Sequelize.INTEGER
-      },
-      skill: {
+      function: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -25,6 +22,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('skills');
+    return queryInterface.dropTable('FunctionalAreas');
   }
 };
