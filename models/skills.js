@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const skills = sequelize.define('skills', {
-    funcArea: DataTypes.STRING,
+    funcArea: DataTypes.INTEGER,
     skill: DataTypes.STRING
   }, {});
   skills.associate = function(models) {

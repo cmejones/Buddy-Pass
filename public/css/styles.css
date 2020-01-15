@@ -1,0 +1,7 @@
+body {
+    margin: 0 auto;
+    text-align: center;
+    background-color: #E4E9FD;
+    background-image: -webkit-linear-gradient(120deg, #D93D2c 50%, #DBEDF3 50%);
+    min-height: 800px;
+}
