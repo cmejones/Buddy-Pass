@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/edit', function(req, res, next) {
-    res.render('pages/edit');
+    res.render('pages/edit', { user: req.user });
 });
 
 router.patch('/edit', function(req, res, next) {

@@ -2,11 +2,14 @@
 <div class="card">
 
     <div class="header">
-        <h4 class="card-title"><%= user.firstName %></h4>
-        <h4 class="card-title"><%= user.lastName %></h4>
-        <p class="card-text text-center"><%= user.email %></p>
-        <p class="card-text text-center">Department: <%= user.department %></p>
-        <p class="card-text text-center">Title: <%= user.title %></p>
+        <h4 class="card-title"><%= user.firstName %> <%= user.lastName %></h4>
+        <p class="card-text text-left"><%= user.email %></p>
+        <p class="card-text text-left">Department: <%= user.department %></p>
+        <p class="card-text text-left">Title: <%= user.title %></p>
+        <p class="card-text text-left">Bio: <%= user.bio %></p>
+        <p class="card-text text-left">Strengths: <%= user.strengths%></p>
+        <p class="card-text text-left">Weaknesses: <%= user.weaknesses %></p>
+        <p class="card-text text-left">Goals: <%= user.goals %></p>
     </div>
     <div class="photo">
 
@@ -14,10 +17,6 @@
     <hr>
     <div class="content">
         <a href="/profile/edit" class="btn btn-primary">update</a>
-        <p class="card-text text-left">Bio: <%= user.bio %></p>
-        <p class="card-text text-left">Strengths: <%= user.strengths%></p>
-        <p class="card-text text-left">Weaknesses: <%= user.weaknesses %></p>
-        <p class="card-text text-left">Goals: <%= user.goals %></p>
     </div>
 </div>
 

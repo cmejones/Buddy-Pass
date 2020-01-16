@@ -8,25 +8,39 @@
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
             crossorigin="anonymous"
     />
-</head>
-<body>
+    </head>
+    <body>
+    <!-- <form class="container-fluid" action="/profile/edit" method="POST"> -->
+    <% if (user) { %>
+        <form class="container-fluid">
+        <div><input id="user" value="<%= user.id %>" /></div> <!--how to make this more dynamic??-->
+            <label for="title">Title</label>
+            <label>
+            <input class="" type="text" name="title" id="title" autocomplete="off" />
+            </label>
+
+
+            <label for="bio">Department</label>
+            <label>
+            <input class="" type="text" name="department" id="department" autocomplete="off" />
+            </label>
 
 <form>
 
-    <label for="bio">Bio</label>
-    <label>
-        <input class="" type="text" name="bio" id="bio" action="/profile/edit" method="PATCH" autocomplete="off"/>
-    </label>
-
-    <button
-            class="btn btn-primary"
-            type="submit"
-            onclick="profileUpdate()"
-    >
-        save
-    </button>
-</form>
-
+            <button
+                class="btn btn-primary"
+                type="submit"
+                onclick="submitProfileUpdate(event)"
+            >
+            save
+            </button>
+        </form>
+ <% } %>
+    <footer>
+        <%- include('../partials/footer') -%>
+    </footer>
+    </body>
+</html>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <footer>
@@ -41,3 +55,39 @@
 
 
 
+    function submitProfileUpdate(event) {
+        console.log('you clicked me');
+        event.preventDefault();
+        let title_input = document.getElementById('title').value;
+        let department_input = document.getElementById('department').value;
+        let bio_input = document.getElementById('bio').value;
+        let user_id = document.getElementById('user').value;
+
+        let data = {
+            title: title_input,
+            department: department_input,
+            bio: bio_input,
+            user_id: user_id
+        };
+    console.log(data, 'this is my data');
+    profileUpdate(data)
+    .then(res => {
+        // response was a success
+        document.getElementById('title').value = '';
+        document.getElementById('department').value = '';
+        document.getElementById('bio').value = '';
+        console.log('done!', res);
+    })
+    .catch(err => {
+        // response failed
+    });
+    // return axios
+    //     .patch('/api/edit-profile', data)
+    //     .then(response => {
+    //     console.log(response);
+    // })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+    }
+</script>
