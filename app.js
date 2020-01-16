@@ -32,6 +32,15 @@ const sequelize = new Sequelize(process.env.DATABASE_URL || connectionString, {
   }
 });
 
+sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+      console.error('Unable to connect to the database:', err);
+    });
+
 //models
 const Users = UsersModel(sequelize, Sequelize);
 const FunctionalAreas = FunctionModel(sequelize, Sequelize);

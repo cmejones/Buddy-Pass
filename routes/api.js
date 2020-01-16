@@ -27,26 +27,26 @@ router.post('/functional-area', function(req, res, next) {
 
 
 /* UPDATE user profile. */
-router.patch('/edit-profile', function(req, res, next) {
-    console.log('in api.js');
-    const item = {
-        bio: req.body.bio
-        //bio: req.body.data
-    }
-    console.log('this is the item', item);
-
-    db.users.update(
-        { bio: 'here is the update' },
-        { where: { id: 1 } }
-    )
-    .then((item) => {
-        console.log('then item', item);
-        res.json(item);
-    })
-    .catch(err => {
-        res.json(err);
-    });
-});
+// router.patch('/edit-profile', function(req, res, next) {
+//     console.log('in api.js');
+//     const item = {
+//         bio: req.body.bio
+//         //bio: req.body.data
+//     }
+//     console.log('this is the item', item);
+//
+//     db.users.update(
+//         { bio: req.body.bio },
+//         { where: { id: 1 } }
+//     )
+//     .then((item) => {
+//         console.log('then item', item);
+//         res.json(item);
+//     })
+//     .catch(err => {
+//         res.json(err);
+//     });
+// });
 //     db.users.update(item)
 //     //console.log('USERS')
 //         .then((item) => {
