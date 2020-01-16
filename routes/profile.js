@@ -1,9 +1,9 @@
 const config = {
-  host: 'localhost',
-  port: 5432,
-  database: 'buddy_pass',
-  user: 'postgres',
-  password: ''
+    host: 'localhost',
+    port: 5432,
+    database: 'buddy_pass',
+    user: 'postgres',
+    password: ''
 };
 
 var express = require('express');
@@ -16,20 +16,20 @@ const Op = Sequelize.Op;
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  res.render('pages/profile', { user: req.user });
+    res.render('pages/profile', { user: req.user });
 });
 
 router.get('/edit', function(req, res, next) {
-  res.render('pages/edit');
+    res.render('pages/edit');
 });
 
 router.patch('/edit', function(req, res, next) {
-  
-  let data = {
-    bio: req.body.bio
-  };
 
-  console.log(data);
+    let data = {
+        bio: req.body.bio
+    };
+
+    console.log(data);
 
   // if (!req.body.bio) {
   //   return res.render('error', {
@@ -40,13 +40,13 @@ router.patch('/edit', function(req, res, next) {
   //     }
   //   });
   // } else {
-  return db.Users.update(data, { where: { user: req.user } })
+    return db.Users.update(data, { where: { user: req.user } })
     .then(user => {
-      console.log(user);
-      res.json(user);
+        console.log(user);
+        res.json(user);
     })
     .catch(err => {
-      done(err);
+        done(err);
     });
 });
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
   <head>
     <%- include('../partials/head') -%>
     <link
@@ -60,3 +61,70 @@
       });
   }
 </script>
+=======
+    <head>
+        <%- include('../partials/head') -%>
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous"
+    />
+    </head>
+    <body>
+    <!-- <form class="container-fluid" action="/profile/edit" method="POST"> -->
+        <form>
+
+            <label for="bio">Bio</label>
+            <label>
+            <input class="" type="text" name="bio" id="bio" autocomplete="off" />
+            </label>
+
+            <button
+                class="btn btn-primary"
+                type="submit"
+                onclick="submitProfileUpdate(event)"
+            >
+            save
+            </button>
+        </form>
+
+    <footer>
+        <%- include('../partials/footer') -%>
+    </footer>
+    </body>
+</html>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+
+<script type="text/javascript">
+
+    function submitProfileUpdate(event) {
+        console.log('you clicked me');
+        event.preventDefault();
+        let bio_input = document.getElementById('bio').value;
+        let data = {
+            bio: bio_input
+        };
+    console.log(data, 'this is my data');
+    profileUpdate(data)
+    .then(res => {
+        // response was a success
+        document.getElementById('bio').value = '';
+        console.log('done!', res);
+    })
+    .catch(err => {
+        // response failed
+    });
+    // return axios
+    //     .patch('/api/edit-profile', data)
+    //     .then(response => {
+    //     console.log(response);
+    // })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+    }
+</script>
+>>>>>>> master
