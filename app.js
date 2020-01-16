@@ -75,36 +75,6 @@ app.use('/profile', profileRouter);
 app.use('/adminInput', adminRouter);
 app.use('/', indexRouter);
 
-<<<<<<< HEAD
-// //api calls
-app.get('/api/functionalArea', function(req, res) {
-  console.log('no error here!!!');
-  res.end();
-});
-
-app.post('api/functionalArea', function(req, res) {
-  //let data = req.body.name;
-  // console.log(req.body);
-  //console.log(data);
-  res.end(console.log(req.body));
-
-  // FunctionalAreas.create(data).then(function(data) {
-  //   res.setHeader('Content-Type', 'application/json');
-  //   res.end(JSON.stringify(data));
-  // }).catch(function(e) {
-  //   res.status(434).send('Unable to save function')
-  // });
-});
-// // app.get('/api/functionalArea', function(req, res) {
-// //   FunctionalAreas.findAll()
-// //   console.log('api')
-// //     .then((results) => {
-// //       res.setHeader('Content-Type', 'application/json');
-// //       res.end(JSON.stringify(results));
-// //     });
-// // });
-=======
->>>>>>> master
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
