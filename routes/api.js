@@ -10,6 +10,7 @@ router.get('/functional-area', function(req, res, next) {
 })
 
 
+
 /* POST new function. */
 router.post('/functional-area', function(req, res, next) {
     const item = {
@@ -24,24 +25,37 @@ router.post('/functional-area', function(req, res, next) {
         });
 });
 
-
+//GET user profile
+router.get('edit-profile', (req, res) => {
+    Users.findOne({include: [Skills]}).then((results) => {
+    //Comments.findAll().then((results) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(results));
+    });
+});
 
 /* UPDATE user profile. */
 router.patch('/edit-profile', function(req, res, next) {
     console.log('in api.js');
     const item = {
-        bio: req.body.bio
-        //bio: req.body.data
+        department: req.body.department,
+        title: req.body.title,
+        bio: req.body.bio,
+        user_id: req.body.user_id
     }
     console.log('this is the item', item);
 
     db.users.update(
-        { bio: 'here is the update' },
-        { where: { id: 1 } }
+        { 
+        department: req.body.department,
+        title: req.body.title,
+        bio: req.body.bio
+        },
+        { where: { id: req.body.user_id } }
     )
-    .then((item) => {
+    .then((item) => {  //what else can this promise be since I don't want to return the item
         console.log('then item', item);
-        res.json(item);
+        res.json(null);
     })
     .catch(err => {
         res.json(err);

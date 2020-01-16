@@ -11,7 +11,19 @@
     </head>
     <body>
     <!-- <form class="container-fluid" action="/profile/edit" method="POST"> -->
-        <form>
+    <% if (user) { %>
+        <form class="container-fluid">
+        <div><input id="user" value="<%= user.id %>" /></div> <!--how to make this more dynamic??-->
+            <label for="title">Title</label>
+            <label>
+            <input class="" type="text" name="title" id="title" autocomplete="off" />
+            </label>
+
+
+            <label for="bio">Department</label>
+            <label>
+            <input class="" type="text" name="department" id="department" autocomplete="off" />
+            </label>
 
             <label for="bio">Bio</label>
             <label>
@@ -26,7 +38,7 @@
             save
             </button>
         </form>
-
+ <% } %>
     <footer>
         <%- include('../partials/footer') -%>
     </footer>
@@ -41,14 +53,23 @@
     function submitProfileUpdate(event) {
         console.log('you clicked me');
         event.preventDefault();
+        let title_input = document.getElementById('title').value;
+        let department_input = document.getElementById('department').value;
         let bio_input = document.getElementById('bio').value;
+        let user_id = document.getElementById('user').value;
+
         let data = {
-            bio: bio_input
+            title: title_input,
+            department: department_input,
+            bio: bio_input,
+            user_id: user_id
         };
     console.log(data, 'this is my data');
     profileUpdate(data)
     .then(res => {
         // response was a success
+        document.getElementById('title').value = '';
+        document.getElementById('department').value = '';
         document.getElementById('bio').value = '';
         console.log('done!', res);
     })
