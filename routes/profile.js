@@ -13,6 +13,11 @@ require('../models/users');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+// require passport and the Strategies used
+const passport = require('passport');
+const Strategy = require('passport-strategy');
+const LinkedInStrategy = require('@sokratis/passport-linkedin-oauth2').Strategy;
+
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
@@ -21,6 +26,18 @@ router.get('/', function(req, res, next) {
 
 router.get('/edit', function(req, res, next) {
     res.render('pages/edit', { user: req.user });
+});
+
+/* LOGOUT profile */
+router.get('/logout', function(req, res, next) {
+
+    console.log("I am Logout");
+    req.logout();
+    res.json({
+        status: "logout",
+        msg:"Please Log In again"
+    });
+
 });
 
 

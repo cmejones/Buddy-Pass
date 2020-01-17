@@ -26,10 +26,11 @@ function profileDelete(data) {
         });
 }
 
-function appLogout() {
+function logoutUser(data) {
     return axios
-        .get('/logout')
+        .get('/profile/logout', data)
         .then(response => {
+            console.log(response);
             window.location = '/';
         })
         .catch(err => {
