@@ -16,5 +16,23 @@
     <footer>
         <%- include('../partials/footer') -%>
     </footer>
+
+
+<script rel="text/javascript">
+
+    function deleteProfile() {
+        console.log('you clicked me!');
+
+        let data = {
+            user_id: req.body.user_id
+        }
+
+        profileDelete(data)
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+</script>
 </body>
 </html>

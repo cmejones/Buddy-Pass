@@ -62,7 +62,18 @@ router.patch('/edit-profile', function(req, res, next) {
     });
 });
 
+// DELETE profile
+router.delete('/delete-profile', function(req, res, next) {
 
+    const user_id = req.body.user_id;
+
+    db.users.destroy({
+        where: { id: req.body.user_id }
+    })
+        .catch(err => {
+            res.json(err);
+        });
+});
 
 
 module.exports = router;

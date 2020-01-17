@@ -13,3 +13,15 @@ function profileUpdate(data) {
             console.log(err);
     });
 }
+
+function profileDelete(data) {
+    return axios
+        .delete('/api/delete-profile' , data)
+        .then(response => {
+            console.log(response.data);
+            window.location = '/';
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}

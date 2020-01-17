@@ -23,7 +23,6 @@ router.get('/edit', function(req, res, next) {
     res.render('pages/edit', { user: req.user });
 });
 
-// Delete profile
-router.delete()
+
 
 module.exports = router;
