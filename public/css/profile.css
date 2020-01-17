@@ -16,3 +16,6 @@ body {
     color: #FFFFFF;
     background-color: #283149;
 }
+.hidden {
+    display:none !important;
+}

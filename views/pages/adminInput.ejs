@@ -23,6 +23,25 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="submitFunctionalArea(event)">Submit</button>
     
         </form>
+        <div></div>
+
+        <form>
+            
+            <h1 class="h3 mb-3 font-weight-normal">Add Skills</h1>
+
+            <div id="errorMessage">
+
+            </div>
+
+            <label for="skill" class="sr-only">Skill</label>
+            <select id="funcAreas">
+                <option>Select a Functional Area</option>
+            </select>
+            <input type="text" id="skill" class="form-control" placeholder="Enter Skill" required autofocus>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="submitSkill(event)">Submit</button>
+    
+        </form>
 
     <% } %>
 
@@ -35,8 +54,29 @@
 <script type="text/javascript" src="/js/script.js"></script>
 
 <script type="text/javascript">
+    var select = document.getElementById("funcAreas"); 
+    //var options = ["1", "2", "3", "4", "5"]; 
+    axios.get('/api/functional-area')
+    .then(function (response) {
+        console.log(response);
+        response.data.forEach(function (functional_area) {
+            var option = document.createElement('option');
+            select.append(option);
+            option.value = functional_area;
+            option.innerText = functional_area;
+        });
+    })
+    //var options = db.FunctionalAreas.findAll(); 
+
+    // for (var i = 0; i < options.length; i++) {
+    //     var opt = options[i];
+    //     var el = document.createElement("option");
+    //     el.textContent = opt;
+    //     el.value = opt;
+    //     select.appendChild(el);
+    // }
+
     function submitFunctionalArea(event) {
-        console.log('bang');
         event.preventDefault();
         let function_input = document.getElementById('functionalArea').value;
 
@@ -49,6 +89,30 @@
             .then(res => {
                 // response was a success
                 document.getElementById('functionalArea').value = '';
+                //console.log('wooo!', res);
+            })
+            .catch(err => {
+                // response failed
+            });
+
+    }
+
+    function submitSkill(event) {
+        console.log('bangnew');
+        event.preventDefault();
+        let function_input = document.getElementById('funcAreas').value;
+        let skill_input = document.getElementById('skill').value;
+
+        let data = {
+            function : function_input,
+            skill: skill_input
+        };
+        console.log(data, 'skills');
+        
+        createSkills(data)
+            .then(res => {
+                // response was a success
+                document.getElementById('skill').value = '';
                 console.log('wooo!', res);
             })
             .catch(err => {
@@ -57,8 +121,7 @@
 
     }
 
-
-
-
     </script>
+
+    
 </html>
