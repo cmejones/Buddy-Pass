@@ -21,10 +21,11 @@
 <script rel="text/javascript">
 
     function deleteProfile() {
-        console.log('you clicked me!');
+
+        alert('you clicked me!');
 
         let data = {
-            user_id: req.body.user_id
+            id: req.user.id
         }
 
         profileDelete(data)

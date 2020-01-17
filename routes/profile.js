@@ -9,7 +9,7 @@ const config = {
 var express = require('express');
 var router = express.Router();
 const db = require('../config/config');
-const users = require('../models/users');
+require('../models/users');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -22,6 +22,8 @@ router.get('/', function(req, res, next) {
 router.get('/edit', function(req, res, next) {
     res.render('pages/edit', { user: req.user });
 });
+
+
 
 
 

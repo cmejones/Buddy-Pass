@@ -25,3 +25,14 @@ function profileDelete(data) {
             console.log(err);
         });
 }
+
+function appLogout() {
+    return axios
+        .get('/logout')
+        .then(response => {
+            window.location = '/';
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
