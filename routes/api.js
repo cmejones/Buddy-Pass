@@ -61,14 +61,7 @@ router.patch('/edit-profile', function(req, res, next) {
         res.json(err);
     });
 });
-//     db.users.update(item)
-//     //console.log('USERS')
-//         .then((item) => {
-//             res.json(item);
-//         })
-//         .catch(err => {
-//             res.json(err);
-//         });
+
 
 
 
