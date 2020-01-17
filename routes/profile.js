@@ -23,22 +23,31 @@ router.get('/edit', function(req, res, next) {
     res.render('pages/edit', { user: req.user });
 });
 
-router.patch('/edit', function(req, res, next) {
-
-    const bio = req.body.params.bio;
-
-    console.log('this is the item from profile.js', bio);
-
-    db.users.update(
-        { bio: bio}, {
-            where: { id: 1 }
-        })
-        .then(() => {
-            res.render('pages/profile')
-        })
-        // .catch(err => {
-        //     res.json(err);
-        // });
-});
+// router.patch('/edit', function(req, res, next) {
+//
+//     let data = {
+//         bio: req.body.bio
+//     };
+//
+//     console.log(data);
+//
+//     // if (!req.body.bio) {
+//     //   return res.render('error', {
+//     //     message: 'No Content Provided',
+//     //     error: {
+//     //       status: 'You must provide some content to submit a new post',
+//     //       stack: null
+//     //     }
+//     //   });
+//     // } else {
+//     return db.Users.update(data, { where: { user: req.user } })
+//         .then(user => {
+//             console.log(user);
+//             res.json(user);
+//         })
+//         .catch(err => {
+//             done(err);
+//         });
+// });
 
 module.exports = router;
