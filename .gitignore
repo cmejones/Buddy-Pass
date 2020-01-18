@@ -9,6 +9,7 @@ node_modules/
 dist/
 coverage/
 .vscode/
+.idea
 
 # Icon must end with two \r
 Icon

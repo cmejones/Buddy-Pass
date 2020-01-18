@@ -111,6 +111,21 @@ router.patch('/edit-profile', function(req, res, next) {
     .catch(err => {
         res.json(err);
     });
+
+});
+
+// DELETE profile+
+router.delete('/delete-profile', function(req, res, next) {
+
+    db.users.destroy({
+        where: { id: req.user.id }
+    })
+        .then((user) => {
+            res.json(user);
+        })
+        .catch(err => {
+            res.json(err);
+        });
 });
 
 module.exports = router;

@@ -1,15 +1,44 @@
 body {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1rem;
     margin: 0 auto;
-    padding: 25px;
-    text-align: left;
-    background-color: #E4E9FD;
-    background-image: -webkit-linear-gradient(120deg, #FE4641 50%, #FFFFFF 50%);
     min-height: 800px;
-        font-family: 'Open Sans', sans-serif;
+    text-align: left;
 }
 
 h1 {
-    font-family: 'Open Sans', sans-serif;
+    color: #283149;
+    font-family: 'Oswald', sans-serif;
     font-weight: bold;
-    text-align:center;
+    text-align:left;
+}
+
+header {
+    padding: 1rem 3rem;
+}
+
+.log-button {
+    background-color: #F73859;
+    border-radius: 10px;
+    color: white;
+    padding: .25rem;
+    width: 10rem;
+}
+
+.landing-right {
+    background-color: #283149;
+    color: #FFFFFF;
+    padding: 3rem;
+}
+
+
+@media (max-width: 700px) {
+
+    header,
+    .landing-right {
+        grid-column: 1 / span 5;
+    }
+
 }

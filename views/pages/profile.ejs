@@ -8,13 +8,49 @@
 </head>
 
 <body>
-    
-    <% if (user) { %>
-        <%- include('../partials/profile-card') -%>
-    <% } %>
+
+    <nav>
+        <%- include('../partials/navigation.ejs') -%>
+    </nav>
+
+
+        <% if (user) { %>
+            <%- include('../partials/profile-card') -%>
+        <% } %>
+
 
     <footer>
         <%- include('../partials/footer') -%>
     </footer>
+
+
+<script rel="text/javascript">
+
+    function deleteProfile() {
+
+        alert('you clicked me!');
+
+        let data = {
+            id: req.user.id
+        }
+
+        profileDelete(data)
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    function appLogout(user) {
+        alert('you clicked me!');
+
+            logoutUser(user);
+
+    }
+
+
+
+
+
+</script>
 </body>
 </html>

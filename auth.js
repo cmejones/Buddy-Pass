@@ -40,13 +40,17 @@ const setupAuth = (app) => {
                     lastName: profile.name.familyName,
                     email: profile.emails[0].value,
                     firstName: profile.name.givenName,
+                    photo: profile.photos[1].value,
                     //now in the future searching on db.users.findOne({provider: 'LinkedIn', 'profile.id': profile.id } will match because of these next 2 lines
                     provider: 'LinkedIn',
                     profile: profile._profileJson
                     });
-                    console.log('new user');
+                    // console.log('new user');
                     return newUser.save();
                 } else {
+
+                    console.log(profile);
+                    console.log('Profile photo: ' + profile.photos[1].value);
                     return user;
                 }
                 })
@@ -111,7 +115,7 @@ const setupAuth = (app) => {
 
     app.get('/logout', function(req, res) {
         req.logout();
-        res.redirect('/login');
+        res.redirect('/');
     });
 }
 

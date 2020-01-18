@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <%- include('../partials/head') -%>
+<head>
+    <%- include('../partials/head') -%>
     <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous"
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
     />
     </head>
     <body>
@@ -20,7 +20,7 @@
             </label>
 
 
-            <label for="bio">Department</label>
+            <label for="department">Department</label>
             <label>
             <input class="" type="text" name="department" id="department" value="<%= user.department %>"autocomplete="off" />
             </label>
@@ -62,11 +62,16 @@
     </body>
 </html>
 
+
+<footer>
+    <%- include('../partials/footer') -%>
+</footer>
+
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src="/js/script.js"></script>
+<script src="../../js/script.js"></script>
 
 <script type="text/javascript">
-
 //TO DO: combine separate functions into looped function
 
     var selectSkill = document.getElementById("skills"); 

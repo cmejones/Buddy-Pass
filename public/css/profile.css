@@ -2,20 +2,65 @@ body {
     margin: 0 auto;
     text-align: center;
     display: grid;
-    grid-template-columns: 70%;
+    grid-template-columns: 20% 60% 20%;
+    background-color: #F5F5F5;
+
 }
 
-.card {
-    width: 100%;
-    background-color: #FFFFFF;
+nav {
+    background-color: #404b69;
+    color: #FFFFFF;
+    opacity: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
     padding: 1rem;
-
+    font-size: 1.25rem;
 }
 
+nav, footer {
+    grid-column: 1 / 4;
+}
+
+ul{
+   list-style: none;
+    padding-left: 20rem;
+}
+
+a {
+    color: #FFFFFF;
+}
+
+a:hover{
+    color: #F73859;
+    text-decoration: none;
+}
+
+
+.card{
+    grid-column: 2 / 3;
+    text-align: center;
+    background-color: #FFFFFF;
+    padding: 2rem;
+}
+
+.profile-photo {
+    border-radius: 50%;
+}
+
+.card-title {
+    padding-top: 1rem;
+}
 .profile-header{
     color: #FFFFFF;
     background-color: #283149;
+    padding: 2rem;
 }
+
 .hidden {
     display:none !important;
+}
+
+.card-footer {
+    background-color: #DBEDF3;
 }
