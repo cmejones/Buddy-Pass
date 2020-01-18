@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const db = require('../models');
 
+
+//GET all functional areas 
 router.get('/functional-area', function(req, res, next) {
     db.FunctionalAreas.findAll()
         .then(data => {
@@ -9,12 +11,35 @@ router.get('/functional-area', function(req, res, next) {
         })
 })
 
+//GET all skills
+router.get('/skills', function(req, res, next) {
+    db.skills.findAll()
+        .then(data => {
+            res.json(data);
+        })
+})
 
+/* POST new skill. */
+router.post('/skills', function(req, res, next) {
+    const item = {
+        funcArea: req.body.functional_area, //this needs to be id
+        skill: req.body.skill
 
-/* POST new function. */
+    }
+    console.log(item.skill, 'api.js')
+    db.skills.create(item)
+        .then((item) => {
+            res.json(item);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
+/* POST new functional area. */
 router.post('/functional-area', function(req, res, next) {
     const item = {
-        function: req.body.function
+        functional_area: req.body.functional_area
     }
     db.FunctionalAreas.create(item)
         .then((item) => {
@@ -53,23 +78,13 @@ router.patch('/edit-profile', function(req, res, next) {
         },
         { where: { id: req.body.user_id } }
     )
-    .then((item) => {  //what else can this promise be since I don't want to return the item
+    .then((item) => {  
         console.log('then item', item);
-        res.json(null);
+        res.json(item);
     })
     .catch(err => {
         res.json(err);
     });
 });
-//     db.users.update(item)
-//     //console.log('USERS')
-//         .then((item) => {
-//             res.json(item);
-//         })
-//         .catch(err => {
-//             res.json(err);
-//         });
-
-
 
 module.exports = router;

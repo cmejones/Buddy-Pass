@@ -13,10 +13,9 @@ const users = require('../models/users');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-/* GET home page. */
 
 router.get('/', function(req, res, next) {
-    res.render('pages/profile', { user: req.user });
+    res.render('pages/profile', { user: req.user });  //pull user data here?
 });
 
 router.get('/edit', function(req, res, next) {
@@ -28,26 +27,27 @@ router.patch('/edit', function(req, res, next) {
     let data = {
         bio: req.body.bio
     };
-
-    console.log(data);
-
-  // if (!req.body.bio) {
-  //   return res.render('error', {
-  //     message: 'No Content Provided',
-  //     error: {
-  //       status: 'You must provide some content to submit a new post',
-  //       stack: null
-  //     }
-  //   });
-  // } else {
-    return db.Users.update(data, { where: { user: req.user } })
-    .then(user => {
-        console.log(user);
-        res.json(user);
-    })
-    .catch(err => {
-        done(err);
-    });
 });
+
+ //   console.log(data);
+
+//   // if (!req.body.bio) {
+//   //   return res.render('error', {
+//   //     message: 'No Content Provided',
+//   //     error: {
+//   //       status: 'You must provide some content to submit a new post',
+//   //       stack: null
+//   //     }
+//   //   });
+//   // } else {
+//     return db.Users.update(data, { where: { user: req.user } })
+//     .then(user => {
+//         console.log(user);
+//         res.json(user);
+//     })
+//     .catch(err => {
+//         done(err);
+//     });
+// });
 
 module.exports = router;
