@@ -8,6 +8,7 @@ function profileUpdate(data) {
         .then(response => {
         console.log(response.data);
         window.location = '/profile';
+
     })
        .catch(err => {
             console.log(err);
@@ -18,7 +19,7 @@ function profileDelete(data) {
     return axios
         .delete('/api/delete-profile' , data)
         .then(response => {
-            console.log(response.data);
+            alert('Your account has been deleted');
             window.location = '/';
         })
         .catch(err => {

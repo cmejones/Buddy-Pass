@@ -55,11 +55,12 @@ router.patch('/edit-profile', function(req, res, next) {
     )
     .then((item) => {  //what else can this promise be since I don't want to return the item
         console.log('then item', item);
-        res.json(null);
+        res.json(item);
     })
     .catch(err => {
         res.json(err);
     });
+
 });
 
 // DELETE profile+
