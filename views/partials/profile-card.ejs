@@ -6,7 +6,11 @@
         <p class="card-text text-left">Department: <%= user.department %></p>
         <p class="card-text text-left">Title: <%= user.title %></p>
         <p class="card-text text-left">Bio: <%= user.bio %></p>
-        <p class="card-text text-left">My Strengths: <%= user.strengths%></p>
+        <p class="card-text text-left">My Strengths:  
+            <ul id="userSkills">
+
+            </ul>  
+</p>
         <p class="card-text text-left">Areas for Improvement: <%= user.weaknesses %></p>
         <p class="card-text text-left">What I want to learn: <%= user.goals %></p>
     </div>
@@ -18,3 +22,20 @@
         <a href="/profile/edit" class="btn btn-primary">update</a>
     </div>
 </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+
+<script type="text/javascript">
+    var userSkills = document.getElementById("userSkills"); 
+    axios.get('/api/user-skills')
+    .then(function (response) {
+        console.log(response);
+        response.data.forEach(function (userSkill) {
+            var optionSkill = document.createElement('li');
+            userSkills.append(optionSkill);
+            optionSkill.value = userSkill['id'];
+            optionSkill.innerText = userSkill['skills_id'];
+        });
+    })
+    
+</script>

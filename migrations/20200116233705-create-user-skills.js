@@ -14,6 +14,12 @@ module.exports = {
       skills_id: {
         type: Sequelize.INTEGER
       },
+      weaknesses_id: {
+        type: Sequelize.INTEGER
+      },
+      goals_id: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

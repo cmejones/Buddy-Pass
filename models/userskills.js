@@ -16,12 +16,26 @@ module.exports = (sequelize, DataTypes) => {
         model: Skills,
         key:'id'
       }
+  },
+  weaknesses_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Skills,
+      key:'id'
+    }
+  },
+  goals_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Skills,
+      key:'id'
+    }
   }
   });
   userSkills.associate = function(models) {
     // associations can be defined here
-    Users.belongsToMany(Skills, {through: 'userSkills'});
-    Skills.belongsToMany(Users, { through: 'userSkills'});
+    //Users.belongsToMany(Skills, {through: 'userSkills'});
+    //Skills.belongsToMany(Users, { through: 'userSkills'});
   };
   return userSkills;
 };

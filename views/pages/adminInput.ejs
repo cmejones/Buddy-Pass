@@ -55,27 +55,15 @@
 
 <script type="text/javascript">
     var select = document.getElementById("funcAreas"); 
-    //var options = ["1", "2", "3", "4", "5"]; 
     axios.get('/api/functional-area')
     .then(function (response) {
-        //console.log(response, 'response for api');
         response.data.forEach(function (functional_area) {
-            //console.log(functional_area, 'test');
             var option = document.createElement('option');
             select.append(option);
             option.value = functional_area['id'];
             option.innerText = functional_area['functional_area'];
         });
     })
-    //var options = db.FunctionalAreas.findAll(); 
-
-    // for (var i = 0; i < options.length; i++) {
-    //     var opt = options[i];
-    //     var el = document.createElement("option");
-    //     el.textContent = opt;
-    //     el.value = opt;
-    //     select.appendChild(el);
-    // }
 
     function submitFunctionalArea(event) {
         event.preventDefault();
@@ -99,10 +87,9 @@
     }
 
     function submitSkill(event) {
-        console.log('bangnew');
         event.preventDefault();
         let function_input = document.getElementById('funcAreas');
-        var selectedFunction = function_input.options[function_input.selectedIndex].value;
+        let selectedFunction = function_input.options[function_input.selectedIndex].value;
             console.log(selectedFunction, 'selected function');
 
         let skill_input = document.getElementById('skill').value;
