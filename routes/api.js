@@ -22,7 +22,7 @@ router.get('/skills', function(req, res, next) {
 /* POST new skill. */
 router.post('/skills', function(req, res, next) {
     const item = {
-        funcArea: req.body.function, //this needs to be id
+        funcArea: req.body.functional_area, //this needs to be id
         skill: req.body.skill
 
     }
@@ -36,10 +36,10 @@ router.post('/skills', function(req, res, next) {
         });
 });
 
-/* POST new function. */
+/* POST new functional area. */
 router.post('/functional-area', function(req, res, next) {
     const item = {
-        function: req.body.function
+        functional_area: req.body.functional_area
     }
     db.FunctionalAreas.create(item)
         .then((item) => {
