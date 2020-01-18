@@ -19,10 +19,18 @@ router.get('/skills', function(req, res, next) {
         })
 })
 
+//GET all userSkills 
+router.get('/user-skills', function(req, res, next) {
+    db.userSkills.findAll()
+        .then(data => {
+            res.json(data);
+        })
+})
+
 /* POST new skill. */
 router.post('/skills', function(req, res, next) {
     const item = {
-        funcArea: req.body.functional_area, //this needs to be id
+        funcArea: req.body.functional_area,
         skill: req.body.skill
 
     }
@@ -50,6 +58,23 @@ router.post('/functional-area', function(req, res, next) {
         });
 });
 
+/* POST new skill association. */
+router.post('/user-skills', function(req, res, next) {
+    const item = {
+        skills_id: req.body.skills_id,
+        //weaknesses: req.body.selectedWeakness,
+        //goals: req.body.selectedGoal,
+        user_id: req.body.user_id
+    }
+    db.userSkills.create(item)
+        .then((item) => {
+            res.json(item);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
 //GET user profile
 router.get('edit-profile', (req, res) => {
     Users.findOne({include: [Skills]}).then((results) => {
@@ -66,6 +91,7 @@ router.patch('/edit-profile', function(req, res, next) {
         department: req.body.department,
         title: req.body.title,
         bio: req.body.bio,
+        strengths: req.body.selectedSkill,
         user_id: req.body.user_id
     }
     console.log('this is the item', item);

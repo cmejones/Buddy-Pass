@@ -2,6 +2,9 @@ function createFunctionalArea(data) {
     return axios.post('/api/functional-area', data);
 }
 
+function createSkillAssociation(skillsData) {
+    return axios.post('/api/user-skills', skillsData);
+}
 function createSkills(data) {
     return axios.post('/api/skills', data);
 }

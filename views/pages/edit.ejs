@@ -30,6 +30,23 @@
             <input class="" type="text" name="bio" id="bio" value="<%= user.bio %>" autocomplete="off" />
             </label>
 
+<br />
+
+            <label for="skill" class="sr-only">Strengths</label>
+            <select id="skills">
+                <option>Select a strength</option>
+            </select>
+
+            <label for="weakness">What I want to improve upon</label>
+            <select id="weaknesses">
+                <option>Select something you want to improve upon</option>
+            </select>
+
+            <label for="bio">What I want to learn</label>
+            <select id="goals">
+                <option>Select what you want to learn</option>
+            </select>
+
             <button
                 class="btn btn-primary"
                 type="submit"
@@ -50,6 +67,41 @@
 
 <script type="text/javascript">
 
+//TO DO: combine separate functions into looped function
+
+    var selectSkill = document.getElementById("skills"); 
+    axios.get('/api/skills')
+    .then(function (response) {
+        response.data.forEach(function (skill) {
+            var optionSkill = document.createElement('option');
+            selectSkill.append(optionSkill);
+            optionSkill.value = skill['id'];
+            optionSkill.innerText = skill['skill'];
+        });
+    })
+
+    var selectWeakness = document.getElementById("weaknesses"); 
+    axios.get('/api/skills')
+    .then(function (response) {
+        response.data.forEach(function (weakness) {
+            var optionWeakness = document.createElement('option');
+            selectWeakness.append(optionWeakness);
+            optionWeakness.value = weakness['id'];
+            optionWeakness.innerText = weakness['skill'];
+        });
+    })
+
+
+    var selectGoal = document.getElementById("goals"); 
+    axios.get('/api/skills')
+    .then(function (response) {
+        response.data.forEach(function (goal) {
+            var optionGoal = document.createElement('option');
+            selectGoal.append(optionGoal);
+            optionGoal.value = goal['id'];
+            optionGoal.innerText = goal['skill'];
+        });
+    })
     function submitProfileUpdate(event) {
         console.log('you clicked me');
         event.preventDefault();
@@ -57,6 +109,16 @@
         let department_input = document.getElementById('department').value;
         let bio_input = document.getElementById('bio').value;
         let user_id = document.getElementById('user').value;
+        
+        let skill_input = document.getElementById('skills');
+        let selectedSkill = skill_input.options[skill_input.selectedIndex].value;
+
+        let weakness_input = document.getElementById('weaknesses');
+        let selectedWeakness = weakness_input.options[weakness_input.selectedIndex].value;      
+            
+        let goal_input = document.getElementById('goals');
+        let selectedGoal = goal_input.options[goal_input.selectedIndex].value;
+        
 
         let data = {
             title: title_input,
@@ -64,13 +126,17 @@
             bio: bio_input,
             user_id: user_id
         };
+
+        let skillsData = {
+            skills_id: selectedSkill, 
+           // weakness_id: selectedWeakness,
+            //goal_id: selectedGoal,
+            user_id: user_id
+        }
     console.log(data, 'this is my data');
     profileUpdate(data)
+    createSkillAssociation(skillsData)
     .then(res => {
-        // response was a success
-        // document.getElementById('title').value = '';
-        // document.getElementById('department').value = '';
-        // document.getElementById('bio').value = '';
         console.log('done!', res);
         window.location.href = '/profile';
         
