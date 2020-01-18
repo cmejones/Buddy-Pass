@@ -13,15 +13,9 @@ require('../models/users');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-// require passport and the Strategies used
-const passport = require('passport');
-const Strategy = require('passport-strategy');
-const LinkedInStrategy = require('@sokratis/passport-linkedin-oauth2').Strategy;
-
-/* GET home page. */
 
 router.get('/', function(req, res, next) {
-    res.render('pages/profile', { user: req.user });
+    res.render('pages/profile', { user: req.user });  //pull user data here?
 });
 
 router.get('/edit', function(req, res, next) {

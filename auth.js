@@ -69,16 +69,21 @@ const setupAuth = (app) => {
     // this function should strip down the user object to something that can be stored in the session
     // for now, we will just use the whole user object but it should probably be just the id
     // null is for errors
-        done(null, user);
+        done(null, user.id);
     });
 
     // deserialize = fetch serialized data from session and find the full user object
-    passport.deserializeUser(function(serializedUser, done) {
+    passport.deserializeUser(function(serializedUserId, done) {
     // this function takes the serialized data and should expand it into a full user object
     // for example, maybe you are going to get the user from the database by id?
     // null is for errors
-        const user = serializedUser;
-        done(null, user);
+        const user = db.users.findOne({where: {id: serializedUserId}})
+        .then(user => {
+            // if (!user) {
+            //     // no user
+            // }
+            done(null, user);
+        });
     });
 
     //initialize passport middleware

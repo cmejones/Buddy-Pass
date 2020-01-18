@@ -23,6 +23,25 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="submitFunctionalArea(event)">Submit</button>
     
         </form>
+        <div></div>
+
+        <form>
+            
+            <h1 class="h3 mb-3 font-weight-normal">Add Skills</h1>
+
+            <div id="errorMessage">
+
+            </div>
+
+            <label for="skill" class="sr-only">Skill</label>
+            <select id="funcAreas">
+                <option>Select a Functional Area</option>
+            </select>
+            <input type="text" id="skill" class="form-control" placeholder="Enter Skill" required autofocus>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="submitSkill(event)">Submit</button>
+    
+        </form>
 
     <% } %>
 
@@ -35,13 +54,23 @@
 <script type="text/javascript" src="/js/script.js"></script>
 
 <script type="text/javascript">
+    var select = document.getElementById("funcAreas"); 
+    axios.get('/api/functional-area')
+    .then(function (response) {
+        response.data.forEach(function (functional_area) {
+            var option = document.createElement('option');
+            select.append(option);
+            option.value = functional_area['id'];
+            option.innerText = functional_area['functional_area'];
+        });
+    })
+
     function submitFunctionalArea(event) {
-        console.log('bang');
         event.preventDefault();
         let function_input = document.getElementById('functionalArea').value;
 
         let data = {
-            function : function_input
+            functional_area : function_input
         };
         console.log(data, 'functional Area');
         
@@ -57,8 +86,34 @@
 
     }
 
+    function submitSkill(event) {
+        event.preventDefault();
+        let function_input = document.getElementById('funcAreas');
+        let selectedFunction = function_input.options[function_input.selectedIndex].value;
+            console.log(selectedFunction, 'selected function');
 
+        let skill_input = document.getElementById('skill').value;
 
+        let data = {
+            functional_area : selectedFunction,
+            skill: skill_input
+        };
+        console.log(data, 'skills');
+        
+        createSkills(data)
+            .then(res => {
+                // response was a success
+                document.getElementById('skill').value = '';
+                document.getElementById('funcAreas').value = 'Select a Functional Area';
+                console.log('wooo!', res);
+            })
+            .catch(err => {
+                // response failed
+            });
+
+    }
 
     </script>
+
+    
 </html>

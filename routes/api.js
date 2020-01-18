@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const db = require('../models');
 
+
+//GET all functional areas 
 router.get('/functional-area', function(req, res, next) {
     db.FunctionalAreas.findAll()
         .then(data => {
@@ -9,14 +11,62 @@ router.get('/functional-area', function(req, res, next) {
         })
 })
 
+//GET all skills
+router.get('/skills', function(req, res, next) {
+    db.skills.findAll()
+        .then(data => {
+            res.json(data);
+        })
+})
 
+//GET all userSkills 
+router.get('/user-skills', function(req, res, next) {
+    db.userSkills.findAll()
+        .then(data => {
+            res.json(data);
+        })
+})
 
-/* POST new function. */
+/* POST new skill. */
+router.post('/skills', function(req, res, next) {
+    const item = {
+        funcArea: req.body.functional_area,
+        skill: req.body.skill
+
+    }
+    console.log(item.skill, 'api.js')
+    db.skills.create(item)
+        .then((item) => {
+            res.json(item);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
+/* POST new functional area. */
 router.post('/functional-area', function(req, res, next) {
     const item = {
-        function: req.body.function
+        functional_area: req.body.functional_area
     }
     db.FunctionalAreas.create(item)
+        .then((item) => {
+            res.json(item);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
+/* POST new skill association. */
+router.post('/user-skills', function(req, res, next) {
+    const item = {
+        skills_id: req.body.skills_id,
+        //weaknesses: req.body.selectedWeakness,
+        //goals: req.body.selectedGoal,
+        user_id: req.body.user_id
+    }
+    db.userSkills.create(item)
         .then((item) => {
             res.json(item);
         })
@@ -41,6 +91,7 @@ router.patch('/edit-profile', function(req, res, next) {
         department: req.body.department,
         title: req.body.title,
         bio: req.body.bio,
+        strengths: req.body.selectedSkill,
         user_id: req.body.user_id
     }
     console.log('this is the item', item);
@@ -53,7 +104,7 @@ router.patch('/edit-profile', function(req, res, next) {
         },
         { where: { id: req.body.user_id } }
     )
-    .then((item) => {  //what else can this promise be since I don't want to return the item
+    .then((item) => {  
         console.log('then item', item);
         res.json(item);
     })
@@ -76,10 +127,5 @@ router.delete('/delete-profile', function(req, res, next) {
             res.json(err);
         });
 });
-
-
-
-
-
 
 module.exports = router;

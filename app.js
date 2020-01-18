@@ -37,9 +37,13 @@ const Users = UsersModel(sequelize, Sequelize);
 const FunctionalAreas = FunctionModel(sequelize, Sequelize);
 const Skills = SkillsModel(sequelize, Sequelize);
 
+
 //Joins
-Users.hasMany(Skills, { foreignKey: 'user_id' });
-Skills.belongsTo(FunctionalAreas, { foreignKey: 'skills_id' });
+//Users.hasMany(Skills, {foreignKey: 'user_id'})
+// //Skills.belongsToMany(Users, { through: 'userskills'}); 
+// FunctionalAreas.hasMany(Skills);
+// Skills.belongsTo(FunctionalAreas);
+
 
 //Routes
 const apiRouter = require('./routes/api');

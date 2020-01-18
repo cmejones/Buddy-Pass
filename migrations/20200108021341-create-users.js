@@ -26,14 +26,11 @@ module.exports = {
       bio: {
         type: Sequelize.TEXT
       },
-      strengths: {
+      photo: {
         type: Sequelize.STRING
       },
-      weaknesses: {
-        type: Sequelize.INTEGER
-      },
-      goals: {
-        type: Sequelize.INTEGER
+      communication: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

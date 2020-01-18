@@ -13,11 +13,17 @@
         <hr>
         <p class="card-text text-left">Department: <%= user.department %></p>
         <p class="card-text text-left">Title: <%= user.title %></p>
-        <hr>
-        <p class="card-text text-left">Strengths: <%= user.strengths%></p>
-        <p class="card-text text-left">Weaknesses: <%= user.weaknesses %></p>
-        <p class="card-text text-left">Goals: <%= user.goals %></p>
-        <p class="card-text text-left">Preferred Method of Communication: <%= user.communication %></p>
+        <p class="card-text text-left">Bio: <%= user.bio %></p>
+        <p class="card-text text-left">My Strengths:  
+            <ul id="userSkills">
+
+            </ul>  
+</p>
+        <p class="card-text text-left">Areas for Improvement: <%= user.weaknesses %></p>
+        <p class="card-text text-left">What I want to learn: <%= user.goals %></p>
+    </div>
+    <div class="photo">
+
     </div>
     <hr>
     <div class="card-footer">
@@ -32,4 +38,20 @@
 
     </div>
 </div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
 
+<script type="text/javascript">
+    var userSkills = document.getElementById("userSkills"); 
+    axios.get('/api/user-skills')
+    .then(function (response) {
+        console.log(response);
+        response.data.forEach(function (userSkill) {
+            var optionSkill = document.createElement('li');
+            userSkills.append(optionSkill);
+            optionSkill.value = userSkill['id'];
+            optionSkill.innerText = userSkill['skills_id'];
+        });
+    })
+    
+</script>

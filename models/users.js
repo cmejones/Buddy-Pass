@@ -8,9 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     department: DataTypes.STRING,
     bio: DataTypes.TEXT,
-    strengths: DataTypes.INTEGER,
-    weaknesses: DataTypes.INTEGER,
-    goals: DataTypes.INTEGER,
+    photo: DataTypes.STRING,
+    communication: DataTypes.STRING,
     provider: DataTypes.STRING,
     profile: DataTypes.JSON
   }, {});
