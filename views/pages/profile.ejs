@@ -8,10 +8,16 @@
 </head>
 
 <body>
-    
-    <% if (user) { %>
-        <%- include('../partials/profile-card') -%>
-    <% } %>
+
+    <nav>
+        <%- include('../partials/navigation.ejs') -%>
+    </nav>
+
+
+        <% if (user) { %>
+            <%- include('../partials/profile-card') -%>
+        <% } %>
+
 
     <footer>
         <%- include('../partials/footer') -%>
