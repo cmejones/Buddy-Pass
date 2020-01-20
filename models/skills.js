@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   skills.associate = function(models) {
     // associations can be defined here
-    FunctionalAreas.belongsTo(skills);
-    skills.hasMany(FunctionalAreas);
-    //skills.belongsTo(userSkills);
+    skills.belongsTo(models.FunctionalAreas, { as: 'functional_area', foreignKey: 'funcArea'});
+
+    //skills.belongsToMany(models.users, {as: 'Strengths', through: models.userSkills, foreignKey: 'user_id'});
   };
   return skills;
 };

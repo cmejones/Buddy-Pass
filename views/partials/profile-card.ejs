@@ -50,75 +50,25 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="/js/script.js"></script>
 
+
 <script type="text/javascript">
-    const userSkills = document.getElementById("userSkills"); 
-    const requestOne = axios.get('/api/user-skills');
-    const requestTwo = axios.get('/api/skills');
-    axios.all([requestOne, requestTwo])
-    .then(axios.spread((...responses) => {
-    console.log(responses, 'responses');
-    
-        const responseOne = responses[0];
-        const responseTwo = responses[1];
-        console.log(responseOne, 'responseOne');
-        console.log(responseTwo, 'responseTwo');
-        responseOne.data.forEach(function (userSkill, user) {
-            console.log(responseOne.data[1].skills_id, 'skills data', responseTwo.data[0].id);
-          //  if (responseOne.data.skills_id == responseTwo.data.id) {
-
-                let optionSkill = document.createElement('li');
-                userSkills.append(optionSkill);
-                //optionSkill.value = responseOne.userSkill['id'];
-                optionSkill.value = userSkill['id'];
-                //optionSkill.innerText = responseTwo.userSkill['skill'];
-                optionSkill.innerText = userSkills['skill'];
-                console.log('user', user);
-           // }
-        });
-    }))
-    .catch (errors => {
-
-    })
-
-
-
-    const userWeaknesses = document.getElementById("userWeaknesses"); 
+    var userSkills = document.getElementById("userSkills"); 
     axios.get('/api/user-skills')
-    axios.get('/api/skills')
     .then(function (response) {
-        //console.log(response);
-        response.data.forEach(function (userWeakness) {
-            var optionWeakness = document.createElement('li');
-            userWeaknesses.append(optionWeakness);
-            optionWeakness.value = userWeakness['id'];
-            optionWeakness.innerText = userWeakness['skill'];
+        console.log('res', response);
+        const strengths = Object.values(response.data.userSkill.strengths);
+        console.log(strengths);
+        const strength = strengths[2];
+        console.log(strength, 'strength');
+       // strengths.forEach(function (userSkill) {
+        //for (const strength of strengths) {
+            var optionSkill = document.createElement('li');
+            userSkills.append(optionSkill);
+            //optionSkill.value = userSkill['id'];
+            optionSkill.innerText = strength;
+       // }
+
         });
-    });
-
-    const userGoals = document.getElementById("userGoals"); 
-    axios.get('/api/user-skills')
-    axios.get('/api/skills')
-    .then(function (response) {
-       // console.log(response);
-        response.data.forEach(function (userGoal) {
-            var optionGoal = document.createElement('li');
-            userGoals.append(optionGoal);
-            optionGoal.value = userGoal['id'];
-            optionGoal.innerText = userGoal['skill'];
-        });
-    });
-
-    //     const skillsName = something;
-    //     axios.get('/api/skills', where )
-
-    //         db.users.update(
-    //     { 
-    //     department: req.body.department,
-    //     title: req.body.title,
-    //     bio: req.body.bio
-    //     },
-    //     { where: { id: req.body.user_id } }
-    // )
-    // })
+    //})
     
 </script>

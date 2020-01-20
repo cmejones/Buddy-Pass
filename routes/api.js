@@ -21,7 +21,12 @@ router.get('/skills', function(req, res, next) {
 
 //GET all userSkills 
 router.get('/user-skills', function(req, res, next) {
-    db.userSkills.findAll()
+    db.users.findOne({ 
+        where: {
+            id: req.user.id
+        },
+        include: [{ all: true, nested: true }]
+    })
         .then(data => {
             res.json(data);
         })
@@ -91,7 +96,7 @@ router.post('/user-skills', function(req, res, next) {
 
 //GET user profile
 router.get('/profile', (req, res) => {
-    Users.findOne({include: [Skills]}).then((results) => {
+    Users.findOne().then((results) => {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(results));
     });
@@ -100,7 +105,6 @@ router.get('/profile', (req, res) => {
 //GET user EDIT profile
 router.get('/edit-profile', (req, res) => {
     Users.findOne({include: [Skills]}).then((results) => {
-    //Comments.findAll().then((results) => {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(results));
     });
