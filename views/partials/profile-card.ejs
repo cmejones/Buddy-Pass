@@ -50,17 +50,25 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="/js/script.js"></script>
 
+
 <script type="text/javascript">
     var userSkills = document.getElementById("userSkills"); 
     axios.get('/api/user-skills')
     .then(function (response) {
-        console.log(response);
-        response.data.forEach(function (userSkill) {
+        console.log('res', response);
+        const strengths = Object.values(response.data.userSkill.strengths);
+        console.log(strengths);
+        const strength = strengths[2];
+        console.log(strength, 'strength');
+       // strengths.forEach(function (userSkill) {
+        //for (const strength of strengths) {
             var optionSkill = document.createElement('li');
             userSkills.append(optionSkill);
-            optionSkill.value = userSkill['id'];
-            optionSkill.innerText = userSkill['skills_id'];
+            //optionSkill.value = userSkill['id'];
+            optionSkill.innerText = strength;
+       // }
+
         });
-    })
+    //})
     
 </script>
