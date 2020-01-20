@@ -31,9 +31,7 @@
             </ul>  
         </p>
     </div>
-    <div class="photo">
 
-    </div>
     <hr>
     <div class="card-footer">
         <a href="mailto:<%= user.email %>"><i class="fas fa-envelope-open-text fa-2x"></i></a>
@@ -52,7 +50,7 @@
 
 
 <script type="text/javascript">
-    var userSkills = document.getElementById("userSkills"); 
+    let userSkills = document.getElementById("userSkills"); 
     axios.get('/api/user-skills')
     .then(function (response) {
         console.log('res', response);
@@ -62,7 +60,7 @@
         console.log(strength, 'strength');
        // strengths.forEach(function (userSkill) {
         //for (const strength of strengths) {
-            var optionSkill = document.createElement('li');
+            let optionSkill = document.createElement('li');
             userSkills.append(optionSkill);
             //optionSkill.value = userSkill['id'];
             optionSkill.innerText = strength;
@@ -70,5 +68,30 @@
 
         });
     //})
+
+    let userWeaknesses = document.getElementById("userWeaknesses"); 
+    axios.get('/api/user-skills')
+    .then(function (response) {
+        console.log('res', response);
+        const weaknesses = Object.values(response.data.userSkill.weaknesses);
+        console.log(weaknesses);
+        const weakness = weaknesses[2];
+        console.log(weakness, 'weakness');
+            let optionWeakness = document.createElement('li');
+            userWeaknesses.append(optionWeakness);
+            optionWeakness.innerText = weakness;
+        }); 
+
+    let userGoals = document.getElementById("userGoals"); 
+    axios.get('/api/user-skills')
+    .then(function (response) {
+        //console.log('res', response);
+        const goals = Object.values(response.data.userSkill.goals);
+        const goal = goals[2];
+        console.log(goal, 'goal');
+            let optionGoal = document.createElement('li');
+            userGoals.append(optionGoal);
+            optionGoal.innerText = goal;
+        }); 
     
 </script>
