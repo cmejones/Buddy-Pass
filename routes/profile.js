@@ -9,7 +9,7 @@ const config = {
 var express = require('express');
 var router = express.Router();
 const db = require('../config/config');
-require('../models/Users');
+require('../models/users');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
