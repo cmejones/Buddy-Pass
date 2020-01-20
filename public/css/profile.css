@@ -23,8 +23,8 @@ nav, footer {
 }
 
 ul{
-   list-style: none;
-    padding-left: 20rem;
+    list-style: none;
+    /* padding-left: 20rem; */
 }
 
 a {
@@ -54,7 +54,13 @@ a:hover{
 .profile-header{
     color: #FFFFFF;
     background-color: #283149;
+    padding: 2rem;
 }
+
 .hidden {
     display:none !important;
+}
+
+.card-footer {
+    background-color: #DBEDF3;
 }

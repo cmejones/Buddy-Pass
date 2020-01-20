@@ -15,8 +15,9 @@ const Op = Sequelize.Op;
 
 
 router.get('/', function(req, res, next) {
-    res.render('pages/profile', { user: req.user });  //pull user data here?
+    res.render('pages/profile', { user: req.user });  
 });
+
 
 router.get('/edit', function(req, res, next) {
     res.render('pages/edit', { user: req.user });
@@ -33,8 +34,6 @@ router.get('/logout', function(req, res, next) {
     });
 
 });
-
-
 
 
 

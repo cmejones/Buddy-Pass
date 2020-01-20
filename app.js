@@ -38,13 +38,6 @@ const FunctionalAreas = FunctionModel(sequelize, Sequelize);
 const Skills = SkillsModel(sequelize, Sequelize);
 
 
-//Joins
-//Users.hasMany(Skills, {foreignKey: 'user_id'})
-// //Skills.belongsToMany(Users, { through: 'userskills'}); 
-// FunctionalAreas.hasMany(Skills);
-// Skills.belongsTo(FunctionalAreas);
-
-
 //Routes
 const apiRouter = require('./routes/api');
 const loginRouter = require('./routes/login');
