@@ -23,8 +23,8 @@ nav, footer {
 }
 
 ul{
-   list-style: none;
-    padding-left: 20rem;
+    list-style: none;
+    /* padding-left: 20rem; */
 }
 
 a {

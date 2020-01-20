@@ -26,7 +26,7 @@ function profileDelete(data) {
     return axios
         .delete('/api/delete-profile' , data)
         .then(response => {
-            alert('Your account has been deleted');
+            //alert('Your account has been deleted');
             window.location = '/';
         })
         .catch(err => {
