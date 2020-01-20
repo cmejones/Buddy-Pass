@@ -64,3 +64,13 @@ a:hover{
 .card-footer {
     background-color: #DBEDF3;
 }
+
+.btn-primary {
+    background-color: #404b69;
+    border-color: #404b69;
+}
+
+.btn-primary:hover {
+    background-color: #404b69;
+    border-color: #404b69;
+}

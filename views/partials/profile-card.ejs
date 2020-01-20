@@ -59,7 +59,7 @@
         const strength = strengths[2];
         console.log(strength, 'strength');
        // strengths.forEach(function (userSkill) {
-        //for (const strength of strengths) {
+       // for (const strength of strengths) {
             let optionSkill = document.createElement('li');
             userSkills.append(optionSkill);
             //optionSkill.value = userSkill['id'];
@@ -67,7 +67,7 @@
        // }
 
         });
-    //})
+   // })
 
     let userWeaknesses = document.getElementById("userWeaknesses"); 
     axios.get('/api/user-skills')
