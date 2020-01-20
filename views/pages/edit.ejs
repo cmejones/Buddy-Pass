@@ -1,154 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <%- include('../partials/head') -%>
     <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-            crossorigin="anonymous"
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
     />
-    </head>
-    <body>
+  </head>
+  <body>
     <!-- <form class="container-fluid" action="/profile/edit" method="POST"> -->
     <% if (user) { %>
-        <form class="container-fluid">
-        <input style="display:none;" id="user" value="<%= user.id %>" /> <!--how to make this more dynamic??-->
-            <label for="title">Title</label>
-            <label>
-            <input class="" type="text" name="title" id="title" value="<%= user.title %>" autocomplete="off" />
-            </label>
+    <form class="container-fluid">
+      <input style="display:none;" id="user" value="<%= user.id %>" />
+      <!--how to make this more dynamic??-->
+      <label for="title">Title</label>
+      <label>
+        <input
+          class=""
+          type="text"
+          name="title"
+          id="title"
+          value="<%= user.title %>"
+          autocomplete="off"
+        />
+      </label>
 
+      <label for="department">Department</label>
+      <label>
+        <input
+          class=""
+          type="text"
+          name="department"
+          id="department"
+          value="<%= user.department %>"
+          autocomplete="off"
+        />
+      </label>
 
-            <label for="department">Department</label>
-            <label>
-            <input class="" type="text" name="department" id="department" value="<%= user.department %>"autocomplete="off" />
-            </label>
+      <label for="bio">Bio</label>
+      <label>
+        <input
+          class=""
+          type="text"
+          name="bio"
+          id="bio"
+          value="<%= user.bio %>"
+          autocomplete="off"
+        />
+      </label>
 
-            <label for="bio">Bio</label>
-            <label>
-            <input class="" type="text" name="bio" id="bio" value="<%= user.bio %>" autocomplete="off" />
-            </label>
+      <br />
 
-<br />
+      <label for="skill" class="sr-only">Strengths</label>
+      <select id="skills">
+        <option>Select a strength</option>
+      </select>
 
-            <label for="skill" class="sr-only">Strengths</label>
-            <select id="skills">
-                <option>Select a strength</option>
-            </select>
+      <label for="weakness">What I want to improve upon</label>
+      <select id="weaknesses">
+        <option>Select something you want to improve upon</option>
+      </select>
 
-            <label for="weakness">What I want to improve upon</label>
-            <select id="weaknesses">
-                <option>Select something you want to improve upon</option>
-            </select>
+      <label for="bio">What I want to learn</label>
+      <select id="goals">
+        <option>Select what you want to learn</option>
+      </select>
 
-            <label for="bio">What I want to learn</label>
-            <select id="goals">
-                <option>Select what you want to learn</option>
-            </select>
-
-            <button
-                class="btn btn-primary"
-                type="submit"
-                onclick="submitProfileUpdate(event)"
-            >
-            save
-            </button>
-        </form>
- <% } %>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        onclick="submitProfileUpdate(event)"
+      >
+        save
+      </button>
+    </form>
+    <% } %>
     <footer>
-        <%- include('../partials/footer') -%>
+      <%- include('../partials/footer') -%>
     </footer>
-    </body>
+  </body>
 </html>
 
-
 <footer>
-    <%- include('../partials/footer') -%>
+  <%- include('../partials/footer') -%>
 </footer>
-
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="../../js/script.js"></script>
 
+<script type="text/javascript">
+  //TO DO: combine separate functions into looped function
 
-//TO DO: combine separate functions into looped function
+  var selectSkill = document.getElementById('skills');
+  axios.get('/api/skills').then(function(response) {
+    response.data.forEach(function(skill) {
+      var optionSkill = document.createElement('option');
+      selectSkill.append(optionSkill);
+      optionSkill.value = skill['id'];
+      optionSkill.innerText = skill['skill'];
+    });
+  });
 
-    var selectSkill = document.getElementById("skills"); 
-    axios.get('/api/skills')
-    .then(function (response) {
-        response.data.forEach(function (skill) {
-            var optionSkill = document.createElement('option');
-            selectSkill.append(optionSkill);
-            optionSkill.value = skill['id'];
-            optionSkill.innerText = skill['skill'];
-        });
-    })
+  var selectWeakness = document.getElementById('weaknesses');
+  axios.get('/api/skills').then(function(response) {
+    response.data.forEach(function(weakness) {
+      var optionWeakness = document.createElement('option');
+      selectWeakness.append(optionWeakness);
+      optionWeakness.value = weakness['id'];
+      optionWeakness.innerText = weakness['skill'];
+    });
+  });
 
-    var selectWeakness = document.getElementById("weaknesses"); 
-    axios.get('/api/skills')
-    .then(function (response) {
-        response.data.forEach(function (weakness) {
-            var optionWeakness = document.createElement('option');
-            selectWeakness.append(optionWeakness);
-            optionWeakness.value = weakness['id'];
-            optionWeakness.innerText = weakness['skill'];
-        });
-    })
+  var selectGoal = document.getElementById('goals');
+  axios.get('/api/skills').then(function(response) {
+    response.data.forEach(function(goal) {
+      var optionGoal = document.createElement('option');
+      selectGoal.append(optionGoal);
+      optionGoal.value = goal['id'];
+      optionGoal.innerText = goal['skill'];
+    });
+  });
+  function submitProfileUpdate(event) {
+    console.log('you clicked me');
+    event.preventDefault();
+    let title_input = document.getElementById('title').value;
+    let department_input = document.getElementById('department').value;
+    let bio_input = document.getElementById('bio').value;
+    let user_id = document.getElementById('user').value;
 
+    let skill_input = document.getElementById('skills');
+    let selectedSkill = skill_input.options[skill_input.selectedIndex].value;
 
-    var selectGoal = document.getElementById("goals"); 
-    axios.get('/api/skills')
-    .then(function (response) {
-        response.data.forEach(function (goal) {
-            var optionGoal = document.createElement('option');
-            selectGoal.append(optionGoal);
-            optionGoal.value = goal['id'];
-            optionGoal.innerText = goal['skill'];
-        });
-    })
-    function submitProfileUpdate(event) {
-        console.log('you clicked me');
-        event.preventDefault();
-        let title_input = document.getElementById('title').value;
-        let department_input = document.getElementById('department').value;
-        let bio_input = document.getElementById('bio').value;
-        let user_id = document.getElementById('user').value;
-        
-        let skill_input = document.getElementById('skills');
-        let selectedSkill = skill_input.options[skill_input.selectedIndex].value;
+    let weakness_input = document.getElementById('weaknesses');
+    let selectedWeakness =
+      weakness_input.options[weakness_input.selectedIndex].value;
 
-        let weakness_input = document.getElementById('weaknesses');
-        let selectedWeakness = weakness_input.options[weakness_input.selectedIndex].value;      
-            
-        let goal_input = document.getElementById('goals');
-        let selectedGoal = goal_input.options[goal_input.selectedIndex].value;
-        
+    let goal_input = document.getElementById('goals');
+    let selectedGoal = goal_input.options[goal_input.selectedIndex].value;
 
-        let data = {
-            title: title_input,
-            department: department_input,
-            bio: bio_input,
-            user_id: user_id
-        };
+    let data = {
+      title: title_input,
+      department: department_input,
+      bio: bio_input,
+      user_id: user_id
+    };
 
-        let skillsData = {
-            skills_id: selectedSkill, 
-           // weakness_id: selectedWeakness,
-            //goal_id: selectedGoal,
-            user_id: user_id
-        }
+    let skillsData = {
+      skills_id: selectedSkill,
+      // weakness_id: selectedWeakness,
+      //goal_id: selectedGoal,
+      user_id: user_id
+    };
     console.log(data, 'this is my data');
-    profileUpdate(data)
+    profileUpdate(data);
     createSkillAssociation(skillsData)
-    .then(res => {
+      .then(res => {
         console.log('done!', res);
         window.location.href = '/profile';
-        
-    })
-    .catch(err => {
+      })
+      .catch(err => {
         // response failed
-    });
-
-    }
+      });
+  }
 </script>
