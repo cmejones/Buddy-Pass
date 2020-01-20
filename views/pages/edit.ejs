@@ -8,44 +8,64 @@
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
             crossorigin="anonymous"
     />
-    </head>
+    <link rel='stylesheet' href='/css/profile.css'></link>
+</head>
     <body>
-    <!-- <form class="container-fluid" action="/profile/edit" method="POST"> -->
+        <nav>
+            <%- include('../partials/navigation.ejs') -%>
+        </nav>
+
     <% if (user) { %>
+    <div class="card">
         <form class="container-fluid">
-        <input style="display:none;" id="user" value="<%= user.id %>" /> <!--how to make this more dynamic??-->
-            <label for="title">Title</label>
-            <label>
-            <input class="" type="text" name="title" id="title" value="<%= user.title %>" autocomplete="off" />
-            </label>
+            <div class="photo">
+                <img src="<%= user.photo%>" alt="profile-img" class="profile-photo">
+            </div>
 
+            <h4 class="card-title"><%= user.firstName %> <%= user.lastName %></h4>
+            
+            <hr>
+        <input style="display:none;" id="user" value="<%= user.id %>" />
+           <p>
+                <label class="card-text text-left" for="title">Title </label>
+                <input class="" type="text" name="title" id="title" value="<%= user.title %>" autocomplete="off" />
+            </p>
 
-            <label for="department">Department</label>
-            <label>
-            <input class="" type="text" name="department" id="department" value="<%= user.department %>"autocomplete="off" />
-            </label>
+            <p>
+                <label class="card-text text-left" for="department">Department <label>
+                <input class="" type="text" name="department" id="department" value="<%= user.department %>"autocomplete="off" />
+            </p>
 
-            <label for="bio">Bio</label>
-            <label>
-            <input class="" type="text" name="bio" id="bio" value="<%= user.bio %>" autocomplete="off" />
-            </label>
+            <p>
+                <label class="card-text text-left" for="communication">Preferred Method of Communication <label>
+                <input class="" type="text" name="communication" id="communication" value="<%= user.communication %>"autocomplete="off" />
+            </p>
 
-<br />
+            <p>
+                <label class="card-text text-left" for="bio">Bio </label>
+                <textarea rows="4" cols="50" name="bio" id="bio" autocomplete="off"><%= user.bio %></textarea>
+            </p>
 
-            <label for="skill" class="sr-only">Strengths</label>
-            <select id="skills">
-                <option>Select a strength</option>
-            </select>
+            <p>
+                <label for="skill" class="card-text text-left">My Strengths</label>
+                <select id="skills">
+                    <option>Select</option>
+                </select>
+            </p>
 
-            <label for="weakness">What I want to improve upon</label>
-            <select id="weaknesses">
-                <option>Select something you want to improve upon</option>
-            </select>
+            <p>
+                <label class="card-text text-left" for="weakness">What I want to improve upon</label>
+                <select id="weaknesses">
+                    <option>Select</option>
+                </select>
+            </p>
 
-            <label for="bio">What I want to learn</label>
-            <select id="goals">
-                <option>Select what you want to learn</option>
-            </select>
+            <p>
+                <label class="card-text text-left" for="goal">What I want to learn</label>
+                <select id="goals">
+                    <option>Select</option>
+                </select>
+            </p>
 
             <button
                 class="btn btn-primary"
@@ -55,18 +75,18 @@
             save
             </button>
         </form>
+    </div>
  <% } %>
-    <footer>
-        <%- include('../partials/footer') -%>
-    </footer>
+
     </body>
-</html>
+
 
 
 <footer>
     <%- include('../partials/footer') -%>
 </footer>
 
+</html>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="../../js/script.js"></script>
@@ -113,6 +133,7 @@
         let title_input = document.getElementById('title').value;
         let department_input = document.getElementById('department').value;
         let bio_input = document.getElementById('bio').value;
+        let communication_input = document.getElementById('communication').value;
         let user_id = document.getElementById('user').value;
         
         let skill_input = document.getElementById('skills');
@@ -129,6 +150,7 @@
             title: title_input,
             department: department_input,
             bio: bio_input,
+            communication: communication_input,
             user_id: user_id
         };
 
@@ -138,11 +160,11 @@
             goal_id: selectedGoal,
             user_id: user_id
         }
-    console.log(data, 'this is my data');
+    //console.log(data, 'this is my data');
     profileUpdate(data)
     createSkillAssociation(skillsData)
     .then(res => {
-        console.log('done!', res);
+        //console.log('done!', res);
         window.location.href = '/profile';
         
     })

@@ -32,19 +32,6 @@ router.get('/user-skills', function(req, res, next) {
         })
 })
 
-// router.get('/skill-name', function(req, res, next) {
-//     db.userSkills.findAll({
-//         //where: {'skills_id': 1 }
-//         .success(function(Skills) {
-//             Skills.getStrengths().success(function(skills_id) {
-//                 console.log('strengths',getStrengths() )
-//             })
-//         })
-//     })
-//     .then(data => {
-//         res.json(data);
-//     })
-// })
 
 /* POST new skill. */
 router.post('/skills', function(req, res, next) {
@@ -117,7 +104,7 @@ router.patch('/edit-profile', function(req, res, next) {
         department: req.body.department,
         title: req.body.title,
         bio: req.body.bio,
-        strengths: req.body.selectedSkill,
+        communication: req.body.communication,
         user_id: req.body.user_id
     }
     console.log('this is the item', item);
@@ -126,7 +113,8 @@ router.patch('/edit-profile', function(req, res, next) {
         { 
         department: req.body.department,
         title: req.body.title,
-        bio: req.body.bio
+        bio: req.body.bio,
+        communication: req.body.communication,
         },
         { where: { id: req.body.user_id } }
     )
