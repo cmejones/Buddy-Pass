@@ -17,7 +17,7 @@ function profileUpdate(data) {
         window.location = '/profile';
 
     })
-       .catch(err => {
+    .catch(err => {
             console.log(err);
     });
 }

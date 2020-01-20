@@ -22,12 +22,12 @@ router.get('/edit', function(req, res, next) {
     res.render('pages/edit', { user: req.user });
 });
 
-router.patch('/edit', function(req, res, next) {
+// router.patch('/edit', function(req, res, next) {
 
-    let data = {
-        bio: req.body.bio
-    };
-});
+//     let data = {
+//         bio: req.body.bio
+//     };
+// });
 
 /* LOGOUT profile */
 router.get('/logout', function(req, res, next) {

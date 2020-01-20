@@ -27,6 +27,20 @@ router.get('/user-skills', function(req, res, next) {
         })
 })
 
+// router.get('/skill-name', function(req, res, next) {
+//     db.userSkills.findAll({
+//         //where: {'skills_id': 1 }
+//         .success(function(Skills) {
+//             Skills.getStrengths().success(function(skills_id) {
+//                 console.log('strengths',getStrengths() )
+//             })
+//         })
+//     })
+//     .then(data => {
+//         res.json(data);
+//     })
+// })
+
 /* POST new skill. */
 router.post('/skills', function(req, res, next) {
     const item = {
@@ -62,8 +76,8 @@ router.post('/functional-area', function(req, res, next) {
 router.post('/user-skills', function(req, res, next) {
     const item = {
         skills_id: req.body.skills_id,
-        //weaknesses: req.body.selectedWeakness,
-        //goals: req.body.selectedGoal,
+        weaknesses_id: req.body.weakness_id,
+        goals_id: req.body.goal_id,
         user_id: req.body.user_id
     }
     db.userSkills.create(item)
@@ -76,7 +90,15 @@ router.post('/user-skills', function(req, res, next) {
 });
 
 //GET user profile
-router.get('edit-profile', (req, res) => {
+router.get('/profile', (req, res) => {
+    Users.findOne({include: [Skills]}).then((results) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(results));
+    });
+});
+
+//GET user EDIT profile
+router.get('/edit-profile', (req, res) => {
     Users.findOne({include: [Skills]}).then((results) => {
     //Comments.findAll().then((results) => {
         res.setHeader('Content-Type', 'application/json');

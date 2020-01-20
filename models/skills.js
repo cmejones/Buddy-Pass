@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const FunctionalAreas = sequelize.define('FunctionalAreas', { name: DataTypes.STRING });
+  //const userSkills = sequelize.define('userSkills', { name: DataTypes.STRING });
   const skills = sequelize.define('skills', {
     funcArea: {
       type: DataTypes.INTEGER,
@@ -15,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     FunctionalAreas.belongsTo(skills);
     skills.hasMany(FunctionalAreas);
+    //skills.belongsTo(userSkills);
   };
   return skills;
 };
