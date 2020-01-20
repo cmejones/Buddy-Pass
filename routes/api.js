@@ -74,6 +74,7 @@ router.post('/user-skills', function(req, res, next) {
     }
     db.userSkills.create(item)
         .then((item) => {
+            console.log(item, 'updated skills');
             res.json(item);
         })
         .catch(err => {
