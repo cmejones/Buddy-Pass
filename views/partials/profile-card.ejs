@@ -50,48 +50,46 @@
 
 
 <script type="text/javascript">
+
     let userSkills = document.getElementById("userSkills"); 
     axios.get('/api/user-skills')
     .then(function (response) {
-        console.log('res', response);
-        const strengths = Object.values(response.data.userSkill.strengths);
-        console.log(strengths);
-        const strength = strengths[2];
-        console.log(strength, 'strength');
-       // strengths.forEach(function (userSkill) {
-        //for (const strength of strengths) {
+        console.log('res', response); 
+        for (let i=0; i<response.data.length; i++){
+            const strengths = Object.values(response.data[i].userSkill.strengths);
+            const strength = strengths[2];
+        
             let optionSkill = document.createElement('li');
             userSkills.append(optionSkill);
-            //optionSkill.value = userSkill['id'];
-            optionSkill.innerText = strength;
-       // }
+            optionSkill.innerText = strength ;
+        }
+    });
 
-        });
-    //})
-
-    let userWeaknesses = document.getElementById("userWeaknesses"); 
     axios.get('/api/user-skills')
     .then(function (response) {
-        console.log('res', response);
-        const weaknesses = Object.values(response.data.userSkill.weaknesses);
-        console.log(weaknesses);
-        const weakness = weaknesses[2];
-        console.log(weakness, 'weakness');
+        console.log('res', response); 
+        for (let i=0; i<response.data.length; i++){
+            const weaknesses = Object.values(response.data[i].userSkill.weaknesses);
+            const weakness = weaknesses[2];
+        
             let optionWeakness = document.createElement('li');
             userWeaknesses.append(optionWeakness);
             optionWeakness.innerText = weakness;
-        }); 
+        }
+    });
 
-    let userGoals = document.getElementById("userGoals"); 
     axios.get('/api/user-skills')
     .then(function (response) {
-        //console.log('res', response);
-        const goals = Object.values(response.data.userSkill.goals);
-        const goal = goals[2];
-        console.log(goal, 'goal');
+        console.log('res', response); 
+        for (let i=0; i<response.data.length; i++){
+            const goals = Object.values(response.data[i].userSkill.goals);
+            const goal = goals[2];
+        
             let optionGoal = document.createElement('li');
             userGoals.append(optionGoal);
             optionGoal.innerText = goal;
-        }); 
+        }
+    });
+
     
 </script>

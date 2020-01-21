@@ -21,7 +21,7 @@ router.get('/skills', function(req, res, next) {
 
 //GET all userSkills 
 router.get('/user-skills', function(req, res, next) {
-    db.users.findOne({ 
+    db.users.findAll({ //need findAll to search all rows of the userSkills table
         where: {
             id: req.user.id
         },
@@ -74,6 +74,7 @@ router.post('/user-skills', function(req, res, next) {
     }
     db.userSkills.create(item)
         .then((item) => {
+            console.log(item, 'updated skills');
             res.json(item);
         })
         .catch(err => {
