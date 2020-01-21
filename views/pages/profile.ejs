@@ -23,32 +23,5 @@
         <%- include('../partials/footer') -%>
     </footer>
 
-
-<script rel="text/javascript">
-
-    function deleteProfile() {
-
-        let data = {
-            id: req.user.id
-        }
-
-        profileDelete(data)
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
-    function appLogout(user) {
-        alert('you clicked me!');
-
-            logoutUser(user);
-
-    }
-
-
-
-
-
-</script>
 </body>
 </html>

@@ -3,6 +3,7 @@ body {
     text-align: center;
     display: grid;
     grid-template-columns: 20% 60% 20%;
+    grid-gap: 1rem;
     background-color: #F5F5F5;
 
 }
@@ -42,6 +43,10 @@ a:hover{
     text-align: center;
     background-color: #FFFFFF;
     padding: 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .profile-photo {
@@ -59,6 +64,10 @@ a:hover{
 
 .hidden {
     display:none !important;
+}
+
+.form-group {
+    text-align: left;
 }
 
 .card-footer {

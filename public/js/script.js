@@ -46,6 +46,26 @@ function logoutUser(data) {
         });
 }
 
+function deleteProfile() {
+    alert('you clicked me!');
+
+    let data = {
+        id: req.user.id
+    }
+
+    profileDelete(data)
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+function appLogout(user) {
+    alert('you clicked me!');
+
+    logoutUser(user);
+
+}
+
 
 // //return functional areas
 // const findFuncAreas = async function (funcAreaId) {

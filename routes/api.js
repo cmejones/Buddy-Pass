@@ -37,10 +37,10 @@ router.get('/user-skills', function(req, res, next) {
 router.post('/skills', function(req, res, next) {
     const item = {
         funcArea: req.body.functional_area,
-        skill: req.body.skill
+        skill: req.body.skills
 
     }
-    console.log(item.skill, 'api.js')
+    console.log(item.skill, 'api.js');
     db.skills.create(item)
         .then((item) => {
             res.json(item);
@@ -108,7 +108,8 @@ router.patch('/edit-profile', function(req, res, next) {
         communication: req.body.communication,
         user_id: req.body.user_id,
         skills: req.body.skills
-    }
+    };
+
     console.log('this is the item', item);
 
     db.users.update(
