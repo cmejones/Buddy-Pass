@@ -17,7 +17,7 @@
 
     <% if (user) { %>
     <div class="card">
-        <form class="container-fluid">
+        <fieldset class="container-fluid">
             <div class="photo">
                 <img src="<%= user.photo%>" alt="profile-img" class="profile-photo">
             </div>
@@ -52,6 +52,41 @@
                     <option>Select</option>
                 </select>
             </p>
+
+            <form method="POST">
+            <fieldset>
+                <legend>My Strengths: </legend>
+                <div>
+                    <input type="checkbox" id="java" name="skills" value="java">
+                    <label for="java">Java</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="sharepoint" name="skills" value="sharepoint">
+                    <label for="sharepoint">SharePoint</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="javascript" name="skills" value="javascript">
+                    <label for="javascript">JavaScript</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="excel" name="skills" value="excel">
+                    <label for="excel">Excel</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="navision" name="skills" value="navision">
+                    <label for="navision">Navision</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="hubspot" name="skills" value="hubspot">
+                    <label for="hubspot">Hubspot</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="cvent" name="skills" value="cvent">
+                    <label for="cvent">Cvent</label>
+                </div>
+
+            </fieldset>
+            </form>
 
             <p>
                 <label class="card-text text-left" for="weakness">What I want to improve upon</label>

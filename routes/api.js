@@ -105,7 +105,8 @@ router.patch('/edit-profile', function(req, res, next) {
         title: req.body.title,
         bio: req.body.bio,
         communication: req.body.communication,
-        user_id: req.body.user_id
+        user_id: req.body.user_id,
+        skills: req.body.skills
     }
     console.log('this is the item', item);
 
@@ -115,6 +116,7 @@ router.patch('/edit-profile', function(req, res, next) {
         title: req.body.title,
         bio: req.body.bio,
         communication: req.body.communication,
+        skills: req.body.skills
         },
         { where: { id: req.body.user_id } }
     )
