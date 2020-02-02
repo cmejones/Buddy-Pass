@@ -72,6 +72,9 @@ router.post('/user-skills', function(req, res, next) {
         goals_id: req.body.goal_id,
         user_id: req.body.user_id
     }
+    //need to add code to separate out each checkbox to individual row :sequelize:literal?
+    //create function to check if skill is already selected
+    //update model so user can belongsTo userSkills, not hasOne
     db.userSkills.create(item)
         .then((item) => {
             console.log(item, 'updated skills');

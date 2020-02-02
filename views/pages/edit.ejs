@@ -48,9 +48,8 @@
 
             <p>
                 <label for="skill" class="card-text text-left">My Strengths</label>
-                <select id="skills">
-                    <option>Select</option>
-                </select>
+                <div id="skills">
+                </div>
             </p>
 
             <p>
@@ -74,6 +73,13 @@
             >
             save
             </button>
+            <!-- <button
+                class="btn btn-primary"
+                type="submit"
+                onclick="printChecked()"
+            >
+            save
+            </button> -->
         </form>
     </div>
  <% } %>
@@ -98,12 +104,29 @@
     axios.get('/api/skills')
     .then(function (response) {
         response.data.forEach(function (skill) {
-            var optionSkill = document.createElement('option');
+            var optionSkill = document.createElement('input');
+            var att = document.createAttribute('type');
+            att.value = 'checkbox';
+            var label = document.createElement('label');
+            optionSkill.setAttributeNode(att);
             selectSkill.append(optionSkill);
+            selectSkill.append(label);
             optionSkill.value = skill['id'];
-            optionSkill.innerText = skill['skill'];
+            label.innerText = skill['skill'];
         });
     })
+
+    function checkedSkills(){
+		var items=document.getElementsByTagName('input');
+		var selectedSkills= [];
+		for(var i=0; i<items.length; i++){
+			if(items[i].type=='checkbox' && items[i].checked==true)
+                let parsedValue = parseInt(items[i].value);
+				selectedSkills.push() += items[i].value +",";
+		}
+        
+		return(selectedSkills);
+	}			
 
     var selectWeakness = document.getElementById("weaknesses"); 
     axios.get('/api/skills')
@@ -127,6 +150,7 @@
             optionGoal.innerText = goal['skill'];
         });
     })
+
     function submitProfileUpdate(event) {
         console.log('you clicked me');
         event.preventDefault();
@@ -137,7 +161,11 @@
         let user_id = document.getElementById('user').value;
         
         let skill_input = document.getElementById('skills');
-        let selectedSkill = skill_input.options[skill_input.selectedIndex].value;
+        //let selectedSkill = skill_input.options[skill_input.checkedIndex].value;
+        let selectedSkill = checkedSkills();  //only works when 1 is selected
+        //create another loop to iterate and put each number by itself
+        //let selectedSkill = selectedSkill;
+        console.log(selectedSkill, 'ss');
 
         let weakness_input = document.getElementById('weaknesses');
         let selectedWeakness = weakness_input.options[weakness_input.selectedIndex].value;      
@@ -160,7 +188,7 @@
             goal_id: selectedGoal,
             user_id: user_id
         }
-    //console.log(data, 'this is my data');
+    //checkedSkills(selectedSkills)
     profileUpdate(data)
     createSkillAssociation(skillsData)
     .then(res => {
