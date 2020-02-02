@@ -8,6 +8,10 @@
         </div>
 
         <h4 class="card-title"><%= user.firstName %> <%= user.lastName %></h4>
+        <div class="card-email">
+            <a href="mailto:<%= user.email %>"><i class="fas fa-envelope-open-text fa-2x"></i></a>
+        </div>
+        
         <hr>
         <p class="card-text text-left">About me: <%= user.bio %></p>
         <hr>
@@ -33,9 +37,7 @@
     </div>
 
     <hr>
-    <div class="card-footer">
-        <a href="mailto:<%= user.email %>"><i class="fas fa-envelope-open-text fa-2x"></i></a>
-    </div>
+
     <div class="content">
         <a href="/profile/edit" class="btn btn-primary">update</a>
         <button class="btn btn-primary" onclick="return confirm('Are you sure you want to delete your profile?'), profileDelete()">delete profile</button>

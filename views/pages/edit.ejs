@@ -26,7 +26,7 @@
             
             <hr>
         <input style="display:none;" id="user" value="<%= user.id %>" />
-           <p>
+            <p>
                 <label class="card-text text-left" for="title">Title </label>
                 <input class="" type="text" name="title" id="title" value="<%= user.title %>" autocomplete="off" />
             </p>
@@ -118,13 +118,14 @@
 
     function checkedSkills(){
 		var items=document.getElementsByTagName('input');
-		var selectedSkills= [];
+		var selectedSkills= []; //need to pull in current values
 		for(var i=0; i<items.length; i++){
 			if(items[i].type=='checkbox' && items[i].checked==true)
-                let parsedValue = parseInt(items[i].value);
-				selectedSkills.push() += items[i].value +",";
+               // let parsedValue = parseInt(items[i].value); //this is breaking the code
+				//selectedSkills.push('1') += items[i].value +",";
+                selectedSkills.push(i);
 		}
-        
+        alert(selectedSkills);
 		return(selectedSkills);
 	}			
 
