@@ -8,7 +8,7 @@ body {
 }
 
 nav {
-    background-color: #404b69;
+    background-color: #283149;
     color: #FFFFFF;
     opacity: 90%;
     display: flex;
@@ -24,7 +24,6 @@ nav, footer {
 
 ul{
     list-style: none;
-    /* padding-left: 20rem; */
 }
 
 a {
@@ -32,7 +31,7 @@ a {
 }
 
 a:hover{
-    color: #F73859;
+    color: #E8E8E8;
     text-decoration: none;
 }
 
@@ -51,6 +50,7 @@ a:hover{
 .card-title {
     padding-top: 1rem;
 }
+
 .profile-header{
     color: #FFFFFF;
     background-color: #283149;
@@ -61,8 +61,9 @@ a:hover{
     display:none !important;
 }
 
-.card-footer {
-    background-color: #DBEDF3;
+.card-email {
+    background-color: #404b69;
+    padding: 1rem;
 }
 
 .btn-primary {

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') -%>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
+    />
+    <link rel='stylesheet' href='/css/profile.css'></link>
+</head>
+    <body>
+        <nav>
+            <%- include('../partials/navigation.ejs') -%>
+        </nav>
+
+    <% if (user) { %>
+    <div class="card">
+        <form class="container-fluid">
+            <div class="photo">
+                <img src="<%= user.photo%>" alt="profile-img" class="profile-photo">
+            </div>
+
+            <h4 class="card-title"><%= user.firstName %> <%= user.lastName %></h4>
+            
+            <hr>
+        <input style="display:none;" id="user" value="<%= user.id %>" />
+            <p>
+                <label class="card-text text-left" for="title">Title </label>
+                <input class="" type="text" name="title" id="title" value="<%= user.title %>" autocomplete="off" />
+            </p>
+
+            <p>
+                <label class="card-text text-left" for="department">Department <label>
+                <input class="" type="text" name="department" id="department" value="<%= user.department %>"autocomplete="off" />
+            </p>
+
+            <p>
+                <label class="card-text text-left" for="communication">Preferred Method of Communication <label>
+                <input class="" type="text" name="communication" id="communication" value="<%= user.communication %>"autocomplete="off" />
+            </p>
+
+            <p>
+                <label class="card-text text-left" for="bio">Bio </label>
+                <textarea rows="4" cols="50" name="bio" id="bio" autocomplete="off"><%= user.bio %></textarea>
+            </p>
+
+            <p>
+                <label for="skill" class="card-text text-left">My Strengths</label>
+                <div id="skills">
+                </div>
+            </p>
+
+            <p>
+                <label class="card-text text-left" for="weakness">What I want to improve upon</label>
+                <select id="weaknesses">
+                    <option>Select</option>
+                </select>
+            </p>
+
+            <p>
+                <label class="card-text text-left" for="goal">What I want to learn</label>
+                <select id="goals">
+                    <option>Select</option>
+                </select>
+            </p>
+
+            <button
+                class="btn btn-primary"
+                type="submit"
+                onclick="submitProfileUpdate(event)"
+            >
+            save
+            </button>
+            <!-- <button
+                class="btn btn-primary"
+                type="submit"
+                onclick="printChecked()"
+            >
+            save
+            </button> -->
+        </form>
+    </div>
+ <% } %>
+
+    </body>
+
+
+
+<footer>
+    <%- include('../partials/footer') -%>
+</footer>
+
+</html>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="../../js/script.js"></script>
+
+<script type="text/javascript">
+//TO DO: combine separate functions into looped function
+
+    var selectSkill = document.getElementById("skills"); 
+    axios.get('/api/skills')
+    .then(function (response) {
+        response.data.forEach(function (skill) {
+            var optionSkill = document.createElement('input');
+            var att = document.createAttribute('type');
+            att.value = 'checkbox';
+            var label = document.createElement('label');
+            optionSkill.setAttributeNode(att);
+            selectSkill.append(optionSkill);
+            selectSkill.append(label);
+            optionSkill.value = skill['id'];
+            label.innerText = skill['skill'];
+        });
+    })
+
+    function checkedSkills(){
+		var items=document.getElementsByTagName('input');
+		var selectedSkills= []; //need to pull in current values
+		for(var i=0; i<items.length; i++){
+			if(items[i].type=='checkbox' && items[i].checked==true)
+               // let parsedValue = parseInt(items[i].value); //this is breaking the code
+				//selectedSkills.push('1') += items[i].value +",";
+                selectedSkills.push(i);
+		}
+        alert(selectedSkills);
+		return(selectedSkills);
+	}			
+
+    var selectWeakness = document.getElementById("weaknesses"); 
+    axios.get('/api/skills')
+    .then(function (response) {
+        response.data.forEach(function (weakness) {
+            var optionWeakness = document.createElement('option');
+            selectWeakness.append(optionWeakness);
+            optionWeakness.value = weakness['id'];
+            optionWeakness.innerText = weakness['skill'];
+        });
+    })
+
+
+    var selectGoal = document.getElementById("goals"); 
+    axios.get('/api/skills')
+    .then(function (response) {
+        response.data.forEach(function (goal) {
+            var optionGoal = document.createElement('option');
+            selectGoal.append(optionGoal);
+            optionGoal.value = goal['id'];
+            optionGoal.innerText = goal['skill'];
+        });
+    })
+
+    function submitProfileUpdate(event) {
+        console.log('you clicked me');
+        event.preventDefault();
+        let title_input = document.getElementById('title').value;
+        let department_input = document.getElementById('department').value;
+        let bio_input = document.getElementById('bio').value;
+        let communication_input = document.getElementById('communication').value;
+        let user_id = document.getElementById('user').value;
+        
+        let skill_input = document.getElementById('skills');
+        //let selectedSkill = skill_input.options[skill_input.checkedIndex].value;
+        let selectedSkill = checkedSkills();  //only works when 1 is selected
+        //create another loop to iterate and put each number by itself
+        //let selectedSkill = selectedSkill;
+        console.log(selectedSkill, 'ss');
+
+        let weakness_input = document.getElementById('weaknesses');
+        let selectedWeakness = weakness_input.options[weakness_input.selectedIndex].value;      
+            
+        let goal_input = document.getElementById('goals');
+        let selectedGoal = goal_input.options[goal_input.selectedIndex].value;
+        
+
+        let data = {
+            title: title_input,
+            department: department_input,
+            bio: bio_input,
+            communication: communication_input,
+            user_id: user_id
+        };
+
+        let skillsData = {
+            skills_id: selectedSkill, 
+            weakness_id: selectedWeakness,
+            goal_id: selectedGoal,
+            user_id: user_id
+        }
+    //checkedSkills(selectedSkills)
+    profileUpdate(data)
+    createSkillAssociation(skillsData)
+    .then(res => {
+        //console.log('done!', res);
+        window.location.href = '/profile';
+        
+    })
+    .catch(err => {
+        // response failed
+    });
+
+    }
+</script>

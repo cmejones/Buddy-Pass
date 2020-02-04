@@ -68,10 +68,13 @@ router.post('/functional-area', function(req, res, next) {
 router.post('/user-skills', function(req, res, next) {
     const item = {
         skills_id: req.body.skills_id,
-        weaknesses_id: req.body.weakness_id,
-        goals_id: req.body.goal_id,
+        // weaknesses_id: req.body.weakness_id,
+        // goals_id: req.body.goal_id,
         user_id: req.body.user_id
     }
+    //need to add code to separate out each checkbox to individual row :sequelize:literal?
+    //create function to check if skill is already selected
+    //update model so user can belongsTo userSkills, not hasOne
     db.userSkills.create(item)
         .then((item) => {
             console.log(item, 'updated skills');
@@ -92,7 +95,8 @@ router.get('/profile', (req, res) => {
 
 //GET user EDIT profile
 router.get('/edit-profile', (req, res) => {
-    Users.findOne({include: [Skills]}).then((results) => {
+    Users.findOne().then((results) => {
+ //   Users.findOne({include: [Skills]}).then((results) => { //need this to find skills from other table
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(results));
     });
@@ -106,6 +110,9 @@ router.patch('/edit-profile', function(req, res, next) {
         title: req.body.title,
         bio: req.body.bio,
         communication: req.body.communication,
+        interests: req.body.interests,
+        favorite_job_tasks: req.body.favorite_job_tasks,
+        to_learn: req.body.to_learn,
         user_id: req.body.user_id
     }
     console.log('this is the item', item);
@@ -116,6 +123,9 @@ router.patch('/edit-profile', function(req, res, next) {
         title: req.body.title,
         bio: req.body.bio,
         communication: req.body.communication,
+        interests: req.body.interests,
+        favorite_job_tasks: req.body.favorite_job_tasks,
+        to_learn: req.body.to_learn,
         },
         { where: { id: req.body.user_id } }
     )
