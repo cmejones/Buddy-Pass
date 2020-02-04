@@ -18,22 +18,11 @@
         <p class="card-text text-left">Department: <%= user.department %></p>
         <p class="card-text text-left">Title: <%= user.title %></p>
         <p class="card-text text-left">Preferred Method of Communication: <%= user.communication %></p>
+        <p class="card-text text-left">Some of my interests: <%= user.interests %></p>
+        <p class="card-text text-left">Favorite Parts of my Job: <%= user.favorite_job_tasks %></p>
+        <p class="card-text text-left">What I want to learn in 2020: <%= user.to_learn %></p>
         
-        <p class="card-text text-left">My Strengths:  
-            <ul class="card-text text-left" id="userSkills">
 
-            </ul>  
-        </p>
-        <p class="card-text text-left">Areas for Improvement: 
-            <ul class="card-text text-left" id="userWeaknesses">
-
-            </ul>  
-        </p>
-        <p class="card-text text-left">What I want to learn:
-            <ul class="card-text text-left" id="userGoals">
-
-            </ul>  
-        </p>
     </div>
 
     <hr>
@@ -50,48 +39,3 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="/js/script.js"></script>
 
-
-<script type="text/javascript">
-
-    let userSkills = document.getElementById("userSkills"); 
-    axios.get('/api/user-skills')
-    .then(function (response) {
-        console.log('res', response); 
-        for (let i=0; i<response.data.length; i++){
-            const strengths = Object.values(response.data[i].userSkill.strengths);
-            const strength = strengths[2];
-        
-            let optionSkill = document.createElement('li');
-            userSkills.append(optionSkill);
-            optionSkill.innerText = strength ;
-        }
-    });
-
-    axios.get('/api/user-skills')
-    .then(function (response) {
-        console.log('res', response); 
-        for (let i=0; i<response.data.length; i++){
-            const weaknesses = Object.values(response.data[i].userSkill.weaknesses);
-            const weakness = weaknesses[2];
-        
-            let optionWeakness = document.createElement('li');
-            userWeaknesses.append(optionWeakness);
-            optionWeakness.innerText = weakness;
-        }
-    });
-
-    axios.get('/api/user-skills')
-    .then(function (response) {
-        console.log('res', response); 
-        for (let i=0; i<response.data.length; i++){
-            const goals = Object.values(response.data[i].userSkill.goals);
-            const goal = goals[2];
-        
-            let optionGoal = document.createElement('li');
-            userGoals.append(optionGoal);
-            optionGoal.innerText = goal;
-        }
-    });
-
-    
-</script>
