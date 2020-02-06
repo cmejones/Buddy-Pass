@@ -75,3 +75,11 @@ a:hover{
     background-color: #404b69;
     border-color: #404b69;
 }
+
+label {
+    display:grid;
+}
+
+.text-indent {
+    padding-left:1.25em;
+}

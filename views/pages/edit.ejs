@@ -16,7 +16,7 @@
         </nav>
 
     <% if (user) { %>
-    <div class="card">
+    <div class="card w-100">
         <form class="container-fluid">
             <div class="photo">
                 <img src="<%= user.photo%>" alt="profile-img" class="profile-photo">
@@ -25,40 +25,40 @@
             <h4 class="card-title"><%= user.firstName %> <%= user.lastName %></h4>
             
             <hr>
-        <input style="display:none;" id="user" value="<%= user.id %>" />
-            <p>
-                <label class="card-text text-left" for="title">Title </label>
-                <input class="" type="text" name="title" id="title" value="<%= user.title %>" autocomplete="off" />
+            <input style="display:none;" id="user" value="<%= user.id %>" />
+            <p class="text-left">
+                <label class="card-text" for="title">Title </label>
+                <input class="w-75" type="text" name="title" id="title" value="<%= user.title %>" autocomplete="off" />
             </p>
 
-            <p>
-                <label class="card-text text-left" for="department">Department <label>
-                <input class="" type="text" name="department" id="department" value="<%= user.department %>"autocomplete="off" />
+            <p class="text-left">
+                <label class="card-text" for="department">Department <label>
+                <input class="w-75" type="text" name="department" id="department" value="<%= user.department %>"autocomplete="off" />
             </p>
 
-            <p>
-                <label class="card-text text-left" for="communication">Preferred Method of Communication <label>
-                <input class="" type="text" name="communication" id="communication" value="<%= user.communication %>"autocomplete="off" />
+            <p class="text-left">
+                <label class="card-text" for="communication">Preferred Method of Communication <label>
+                <input class="w-75" type="text" name="communication" id="communication" value="<%= user.communication %>"autocomplete="off" />
             </p>
 
-            <p>
-                <label class="card-text text-left" for="bio">Bio </label>
-                <textarea rows="4" cols="50" name="bio" id="bio" autocomplete="off"><%= user.bio %></textarea>
+            <p class="text-left"> 
+                <label class="card-text" for="bio">Bio </label>
+                <textarea rows="4" class="w-100" name="bio" id="bio" autocomplete="off"><%= user.bio %></textarea>
             </p>
 
-            <p>
-                <label for="skill" class="card-text text-left">My Interests</label>
-                <textarea rows="4" cols="50" name="interests" id="interests" autocomplete="off"><%= user.interests %></textarea>
+            <p class="text-left">
+                <label for="skill" class="card-text">My Interests</label>
+                <textarea rows="4" class="w-100" name="interests" id="interests" autocomplete="off"><%= user.interests %></textarea>
             </p>
 
-            <p>
-                <label class="card-text text-left" for="favorite_job_tasks">Favorite Aspects of my Job</label>
-                        <textarea rows="4" cols="50" name="favorite_job_tasks" id="favorite_job_tasks" autocomplete="off"><%= user.favorite_job_tasks %></textarea>
+            <p class="text-left">
+                <label class="card-text" for="favorite_job_tasks">Favorite Aspects of my Job</label>
+                        <textarea rows="4" class="w-100" name="favorite_job_tasks" id="favorite_job_tasks" autocomplete="off"><%= user.favorite_job_tasks %></textarea>
             </p>
 
-            <p>
-                <label class="card-text text-left" for="to_learn">What I want to learn in 2020</label>
-                        <textarea rows="4" cols="50" name="to_learn" id="to_learn" autocomplete="off"><%= user.to_learn %></textarea>
+            <p class="text-left">
+                <label class="card-text" for="to_learn">What I want to learn in 2020</label>
+                        <textarea rows="4" class="w-100" name="to_learn" id="to_learn" autocomplete="off"><%= user.to_learn %></textarea>
             </p>
 
             <button
