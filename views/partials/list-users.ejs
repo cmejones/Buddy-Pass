@@ -28,10 +28,11 @@
         .get('/api/users', data)
         .then(response => {
             response.data.forEach(function (user) {
-                console.table(user, 'data');
+                // console.table(user, 'data');
                 let userBlock = document.createElement('div');
                 userBlock.classList.add('row');
                 userBlock.classList.add('profile-line');
+                
                 let userName = document.createElement('div');
                 
                 let userDepartment = document.createElement('div');

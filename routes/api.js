@@ -157,7 +157,7 @@ router.delete('/delete-profile', function(req, res, next) {
 router.get('/users', function(req, res, next) {
     db.users.findAll()
         .then(data => {
-            res.json(data);
+            res.json(data);          
         })
 })
 
