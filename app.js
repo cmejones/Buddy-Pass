@@ -44,6 +44,7 @@ const loginRouter = require('./routes/login');
 const profileRouter = require('./routes/profile');
 const adminRouter = require('./routes/adminInput');
 const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
 const app = express();
 require('dotenv').config();
@@ -70,6 +71,7 @@ app.use('/api', apiRouter);
 app.use('/login', loginRouter);
 app.use('/profile', profileRouter);
 app.use('/adminInput', adminRouter);
+app.use('/users', usersRouter);
 app.use('/', indexRouter);
 
 

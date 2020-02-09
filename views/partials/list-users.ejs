@@ -1,0 +1,67 @@
+
+    <div class="text-center">
+        
+        <h1>Participant List</h1>
+
+        <div class="container">
+            <div id="userList"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+
+<script type="text/javascript">
+
+    let listUsers = document.getElementById('userList'); 
+
+    function getAllUsers(data) {
+        return axios
+        .get('/api/users', data)
+        .then(response => {
+            response.data.forEach(function (user) {
+                console.table(user, 'data');
+                let userBlock = document.createElement('div');
+                userBlock.classList.add('row');
+                userBlock.classList.add('profile-line');
+                let userName = document.createElement('div');
+                
+                let userDepartment = document.createElement('div');
+                userDepartment.classList.add('col-3');
+                
+                let userBio = document.createElement('div');
+                userBio.classList.add('col-3');
+                
+                let userProfile = document.createElement('div');
+                userProfile.classList.add('col-3');
+                
+                listUsers.appendChild(userBlock);
+                userBlock.append(userName);
+                userBlock.append(userDepartment);
+                userBlock.append(userBio);
+                userBlock.append(userProfile);                
+                
+                userName.outerHTML = '<div class="col-3"><strong>' + user.firstName + ' ' + user.lastName +'</strong></div>';
+                userDepartment.innerText = user.department;
+                userBio.innerText = user.bio;
+                userProfile.outerHTML = '<div class="col-3"><a class="profile-email" href="/profile/id">Full Profile</a></div>';
+        });
+
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+    getAllUsers();
+
+
+</script>
+

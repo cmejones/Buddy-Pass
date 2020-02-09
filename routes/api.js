@@ -153,4 +153,20 @@ router.delete('/delete-profile', function(req, res, next) {
         });
 });
 
+//GET all users 
+router.get('/users', function(req, res, next) {
+    db.users.findAll()
+        .then(data => {
+            res.json(data);
+        })
+})
+
+router.get('/users/:id', function(req, res) {
+    let id = req.params.id;
+    db.users.findOne({ where: {id: id}  }).then((results) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(results));
+    });
+});
+
 module.exports = router;

@@ -34,8 +34,9 @@
     <hr>
 
     <div class="content">
-        <a href="/profile/edit" class="btn btn-primary">update</a>
-        <button class="btn btn-primary" onclick="return confirm('Are you sure you want to delete your profile?'), profileDelete()">delete profile</button>
+        <a href="/profile/edit" class="btn btn-primary">update profile</a>
+        <a href="/users" class="btn btn-primary">view participants</a>
+        <!-- <button class="btn btn-primary" onclick="return confirm('Are you sure you want to delete your profile?'), profileDelete()">delete profile</button> -->
         <% if (user) { %>
             <button class="btn btn-primary" onclick="appLogout()">Logout</button>
         <% } %>
