@@ -1,24 +1,12 @@
 
     <div class="text-center">
         
-        <h1 class="h3 mb-3 font-weight-normal">All Users</h1>
+        <h1>Participant List</h1>
 
-        <div id="userList">
-            <div class="card card-body bg-light mb-2">
-                <h3>${data.firstName}</h3>
-                <div>${data.createdAt}</div>
-                <div>Email: ${data.email}</div>
-            </div>
-
-        </div>
-            <div class="card card-body bg-light mb-2">
-            <h3><%= user.name %></h3>
-            <div><%= user.createdAt %></div>
-            <div>Email: <%= user.email %></div>
-
+        <div class="container">
+            <div id="userList"></div>
         </div>
     </div>
-
 
     <script src="https://code.jquery.com/jquery-3.4.1.js"
     integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
@@ -32,51 +20,47 @@
 <script type="text/javascript" src="/js/script.js"></script>
 
 <script type="text/javascript">
-// function createUserList(data) {
 
-//     let user = `
-//         <div class="card card-body bg-light mb-2">
-//             <h3>${data.name}</h3>
-//             <div>${data.createdAt}</div>
-//             <div>Email: ${data.email}</div>
+    let listUsers = document.getElementById('userList'); 
 
-//         </div>
-//     `;
-//     return user;
-// }
+    function getAllUsers(data) {
+        return axios
+        .get('/api/users', data)
+        .then(response => {
+            response.data.forEach(function (user) {
+                console.table(user, 'data');
+                let userBlock = document.createElement('div');
+                userBlock.classList.add('row');
+                userBlock.classList.add('profile-line');
+                let userName = document.createElement('div');
+                
+                let userDepartment = document.createElement('div');
+                userDepartment.classList.add('col-3');
+                
+                let userBio = document.createElement('div');
+                userBio.classList.add('col-3');
+                
+                let userProfile = document.createElement('div');
+                userProfile.classList.add('col-3');
+                
+                listUsers.appendChild(userBlock);
+                userBlock.append(userName);
+                userBlock.append(userDepartment);
+                userBlock.append(userBio);
+                userBlock.append(userProfile);                
+                
+                userName.outerHTML = '<div class="col-3"><strong>' + user.firstName + ' ' + user.lastName +'</strong></div>';
+                userDepartment.innerText = user.department;
+                userBio.innerText = user.bio;
+                userProfile.outerHTML = '<div class="col-3"><a class="profile-email" href="/profile/id">Full Profile</a></div>';
+        });
 
-// function createUserList(user) {
-//     $('#userList').append(user);
-//         console.log('app', user);
-// }
-
-    // var listUsers = document.getElementById("userList"); 
-    // router.get('/api/users')
-    // .then(function (response) {
-    //     response.data.forEach(function (email) {
-    //         var listUser = document.createElement('div');
-    //         listUser.append(email);
-    //     });
-    // })
-    // var allUsers = function(data){
-    
-    //     for(let i = 0; i< data.length; i++) {
-    //         let user = createUserList(data[i]);
-    //         insertUsers(user);
-    //     }
-    //          console.log('all users', data);
-    // };
-
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
     getAllUsers();
-    // createUserList();
-    // addUserList();
-
-
-    // var errorFunction = function(xhr, error) {
-    //     $('#errorMessage').html(response.responseText);
-    // }
-    
-    // getAllUsers(listUsers);
 
 
 </script>

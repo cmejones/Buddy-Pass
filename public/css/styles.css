@@ -1,7 +1,41 @@
 body {
     margin: 0 auto;
     text-align: center;
-    background-color: #E4E9FD;
-    background-image: -webkit-linear-gradient(120deg, #D93D2c 50%, #DBEDF3 50%);
-    min-height: 800px;
+}
+
+nav {
+    background-color: #283149;
+    color: #FFFFFF;
+    opacity: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
+    padding: 1rem;
+    font-size: 1.25rem;
+}
+
+nav, footer {
+    grid-column: 1 / 4;
+}
+
+ul{
+    list-style: none;
+}
+
+a {
+    color: #FFFFFF;
+}
+
+a:hover{
+    color: #E8E8E8;
+    text-decoration: none;
+}
+
+
+a.profile-email { color: #000 !important}
+
+.profile-line{
+    border-bottom: 1px solid #283149;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
