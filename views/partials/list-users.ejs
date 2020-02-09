@@ -1,0 +1,83 @@
+
+    <div class="text-center">
+        
+        <h1 class="h3 mb-3 font-weight-normal">All Users</h1>
+
+        <div id="userList">
+            <div class="card card-body bg-light mb-2">
+                <h3>${data.firstName}</h3>
+                <div>${data.createdAt}</div>
+                <div>Email: ${data.email}</div>
+            </div>
+
+        </div>
+            <div class="card card-body bg-light mb-2">
+            <h3><%= user.name %></h3>
+            <div><%= user.createdAt %></div>
+            <div>Email: <%= user.email %></div>
+
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+
+<script type="text/javascript">
+// function createUserList(data) {
+
+//     let user = `
+//         <div class="card card-body bg-light mb-2">
+//             <h3>${data.name}</h3>
+//             <div>${data.createdAt}</div>
+//             <div>Email: ${data.email}</div>
+
+//         </div>
+//     `;
+//     return user;
+// }
+
+// function createUserList(user) {
+//     $('#userList').append(user);
+//         console.log('app', user);
+// }
+
+    // var listUsers = document.getElementById("userList"); 
+    // router.get('/api/users')
+    // .then(function (response) {
+    //     response.data.forEach(function (email) {
+    //         var listUser = document.createElement('div');
+    //         listUser.append(email);
+    //     });
+    // })
+    // var allUsers = function(data){
+    
+    //     for(let i = 0; i< data.length; i++) {
+    //         let user = createUserList(data[i]);
+    //         insertUsers(user);
+    //     }
+    //          console.log('all users', data);
+    // };
+
+    getAllUsers();
+    // createUserList();
+    // addUserList();
+
+
+    // var errorFunction = function(xhr, error) {
+    //     $('#errorMessage').html(response.responseText);
+    // }
+    
+    // getAllUsers(listUsers);
+
+
+</script>
+
