@@ -14,23 +14,25 @@
         <%- include('../partials/navigation.ejs') -%>
     </nav>
 
+        <!-- <% users.forEach(function(user){ %>
+            <%- include('../partials/user-profile-card', {id: id}) -%>
+        <% }); %> -->
+        <%- include('../partials/user-profile-card') -%>
 
-            <%- include('../partials/user-profile-card') -%>
     
-
-
     <footer>
         <%- include('../partials/footer') -%>
     </footer>
 
 
     <script rel="text/javascript">
-
+        console.log('user-profile page');
         function appLogout(user) {
 
             logoutUser(user);
 
         }
+        //getOneUser();
 
 
     </script>
