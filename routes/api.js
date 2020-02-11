@@ -161,12 +161,4 @@ router.get('/users', function(req, res, next) {
         })
 })
 
-router.get('/users/:id', function(req, res) {
-    let id = req.params.id;
-    db.users.findOne({ where: {id: id}  }).then((results) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(results));
-    });
-});
-
 module.exports = router;

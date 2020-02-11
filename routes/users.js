@@ -18,9 +18,9 @@ router.get('/', function(req, res, next) {
     res.render('pages/users', { user: req.user });  
 });
 
-router.get('/:id', function(req, res, next) {
-    //let id = req.params.id;
-    res.render('pages/users/id', { user: req.user})
-})
+// router.get('/:id', function(req, res, next) {
+//     //let id = req.params.id;
+//     res.render('pages/users/:id', { user: req.user})
+// })
 
 module.exports = router;
