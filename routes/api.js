@@ -161,48 +161,4 @@ router.get('/users', function(req, res, next) {
         })
 })
 
-
-// //GET one user
-// router.get('/user-profile/', function(req, res, next) {
-//     let id = 3;
-//     console.log('in api.js for one user');
-//     db.users.findOne({ where: {id: id }})
-//         .then(data => {
-//             res.json(data);          
-//         })
-// })
-//GET one user with call from list-users.ejs
-router.get('/user-profile/:id', function(req, res, next) {
-    let id = 3;
-    console.log('id',id);
-    console.log('in api.js');
-    db.users.findOne({ where: {id: id }})
-        .then(data => {
-            res.json(data); 
-            console.log('data', data);   //correct values returning in data when id is hardcoded    
-        })
-})
-
-// //GET one user
-// router.get('/user-profile/:id', function(req, res, next) {
-//     console.log('in api.js');
-//     //console.log('api.js id',req.params.id);
-//     //let id = req.params.id; //this is where to dynamically pull in id
-//     let id = 3;
-   
-//     db.users.findOne({ where: {id: id}  }).then((results) => {
-//         console.log(results, 'results from api.js');
-//         if(results.id = id) {
-//             res.setHeader('Content-Type', 'application/json');
-//             res.end(JSON.stringify(results));
-
-//         } else {
-//             res.status(434).send('user not found');
-//         }
-
-//     })
-
-// });
-
-
 module.exports = router;

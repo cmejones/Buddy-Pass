@@ -45,15 +45,3 @@ function logoutUser(data) {
             console.log(err);
         });
 }
-
-// function getOneUser(id) {
-//     return axios
-//         .get('/user-profile/:id', id)
-//         .then(response => {
-//             console.log('in script.js');
-//             res.render('pages/user-profile/:id');
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         })
-// }

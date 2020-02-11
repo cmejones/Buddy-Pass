@@ -1,33 +1,33 @@
 
 <div class="card">
 
-    <div class="header">
+<div class="header">
 
-        <!-- <div class="photo">
+        <div class="photo">
             <img src="<%= user.photo%>" alt="profile-img" class="profile-photo">
         </div>
 
-        <h4 class="card-title"><%= response.data.firstName %> <%= response.data.lastName %></h4>
-        <p class="card-text">Department: <strong><%= response.data.department %></strong></p>
-        <p class="card-text">Title: <strong><%= response.data.title %></strong></p>
-        <p class="card-text">Preferred Method of Communication: <strong><%= response.data.communication %></strong></p>
+        <h4 class="card-title"><%= user.firstName %> <%= user.lastName %></h4>
+        <p class="card-text">Department: <strong><%= user.department %></strong></p>
+        <p class="card-text">Title: <strong><%= user.title %></strong></p>
+        <p class="card-text">Preferred Method of Communication: <strong><%= user.communication %></strong></p>
         <div class="card-email">
             <a href="mailto:<%= user.email %>"><i class="fas fa-envelope-open-text fa-2x"></i></a>
-        </div> -->
+        </div>
         
         <hr>
         <h5 class="card-text text-left">About me:</h5>
-        <p class="card-tex text-left text-indent"></p>
+        <p class="card-tex text-left text-indent"><%= user.bio %></p>
         <hr>
 
         <h5 class="card-text text-left">Some of my interests:</h5>
-        <p class="card-text text-left text-indent"></p>
+        <p class="card-text text-left text-indent"><%= user.interests %></p>
         <hr>
         <h5 class="card-text text-left">Favorite Parts of my Job:</h5>
-        <p class="card-text text-left text-indent"></p>
+        <p class="card-text text-left text-indent"><%= user.favorite_job_tasks %></p>
         <hr>
         <h5 class="card-text text-left">What I want to learn in 2020:</h5>
-        <p class="card-text text-left text-indent"></p>       
+        <p class="card-text text-left text-indent"><%= user.to_learn %></p>       
 
     </div>
 
@@ -43,23 +43,3 @@
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="/js/script.js"></script>
-<script type="text/javascript">
-
-
-function getOneUser(data) {
-    console.log('hi from user-profile-card');
-    return axios
-    .get('/user-profile/:id', {where: {id:id }})
-    .then(response => {
-            console.log(response.data.id, 'data from user-profile-card');//user in the response.data
-    })
-    .catch(err => {
-        console.log(err);
-    });
-}
-// getOneUser(data)
-//     .then(function(result) {
-//         console.log('user', result);
-//     });
-getOneUser();
-</script>
