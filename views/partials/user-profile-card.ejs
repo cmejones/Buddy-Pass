@@ -1,0 +1,62 @@
+
+<div class="card">
+
+    <div class="header">
+
+        <div class="photo">
+            <img src="<%= user.photo%>" alt="profile-img" class="profile-photo">
+        </div>
+
+        <h4 class="card-title"><%= response.data.firstName %> <%= response.data.lastName %></h4>
+        <p class="card-text">Department: <strong><%= response.data.department %></strong></p>
+        <p class="card-text">Title: <strong><%= response.data.title %></strong></p>
+        <p class="card-text">Preferred Method of Communication: <strong><%= response.data.communication %></strong></p>
+        <div class="card-email">
+            <a href="mailto:<%= user.email %>"><i class="fas fa-envelope-open-text fa-2x"></i></a>
+        </div>
+        
+        <hr>
+        <h5 class="card-text text-left">About me:</h5>
+        <p class="card-tex text-left text-indent"></p>
+        <hr>
+
+        <h5 class="card-text text-left">Some of my interests:</h5>
+        <p class="card-text text-left text-indent"></p>
+        <hr>
+        <h5 class="card-text text-left">Favorite Parts of my Job:</h5>
+        <p class="card-text text-left text-indent"></p>
+        <hr>
+        <h5 class="card-text text-left">What I want to learn in 2020:</h5>
+        <p class="card-text text-left text-indent"></p>       
+
+    </div>
+
+    <hr>
+
+    <div class="content">
+        <a href="/users" class="btn btn-primary">view participants</a>
+        <% if (user) { %>
+            <button class="btn btn-primary" onclick="appLogout()">Logout</button>
+        <% } %>
+
+    </div>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+<script type="text/javascript">
+
+
+function getOneUser(data) {
+        console.log('hi from user-profile-card');
+        return axios
+        .get('/api/user-profile/:id', data)
+        .then(response => {
+            console.log(response.data.id, 'data from user-profile-card');//user in the response.data
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+getOneUser();
+
+</script>

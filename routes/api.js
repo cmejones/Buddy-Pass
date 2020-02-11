@@ -161,12 +161,26 @@ router.get('/users', function(req, res, next) {
         })
 })
 
-router.get('/users/:id', function(req, res) {
-    let id = req.params.id;
+//GET one user
+router.get('/user-profile/:id', function(req, res, next) {
+    console.log('in api.js');
+    console.log('api.js id',req.params.id);
+    let id = req.params.id; //this is where to dynamically pull in id
+    //let id = 3;
+   
     db.users.findOne({ where: {id: id}  }).then((results) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(results));
-    });
+        console.log(results, 'results from api.js');
+        if(results.id = id) {
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(results));
+
+        } else {
+            res.status(434).send('user not found');
+        }
+
+    })
+
 });
+
 
 module.exports = router;
